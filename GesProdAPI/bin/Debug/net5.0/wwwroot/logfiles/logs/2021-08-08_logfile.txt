@@ -1,0 +1,8 @@
+2021-08-08 19:18:58.6224 INFO Utilisateur Named: Stéphane AmStrong has logged in successfully
+2021-08-08 19:20:43.1923 INFO Returned all ventesDisponible ventesDisponible from database.
+2021-08-08 21:30:03.3123 INFO Returned all services services from database.
+2021-08-08 21:30:18.7158 INFO Returned all ventesDisponible ventesDisponible from database.
+2021-08-08 21:30:52.8457 INFO Returned all ventProds ventProds from database.
+2021-08-08 21:35:11.2379 INFO Returned all services services from database.
+2021-08-08 21:35:26.3444 INFO Returned all ventesDisponible ventesDisponible from database.
+2021-08-08 21:48:45.9518 INFO Returned all ventesDisponible ventesDisponible from database.
