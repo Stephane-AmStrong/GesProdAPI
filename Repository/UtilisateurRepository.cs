@@ -28,8 +28,6 @@ namespace Repository
         public async Task<Utilisateur> GetUtilisateurByIdAsync(Guid id)
         {
             return await FindByCondition(utilisateur => utilisateur.Id.Equals(id))
-                .OrderBy(x => x.Nom)
-                .OrderBy(x => x.Prenom)
                 .FirstOrDefaultAsync();
         }
 

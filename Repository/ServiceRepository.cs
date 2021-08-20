@@ -26,6 +26,11 @@ namespace Repository
                     paginationParameters.PageSize)
                 );
         }
+        
+        public async Task<ICollection<Service>> GetAllServicesAsync()
+        {
+            return await Task.Run(() =>FindAll().ToListAsync());
+        }
 
         public async Task<Service> GetServiceByIdAsync(Guid id)
         {

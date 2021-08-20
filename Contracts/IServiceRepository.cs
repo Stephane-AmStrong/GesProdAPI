@@ -10,6 +10,7 @@ namespace Contracts
     public interface IServiceRepository
     {
         Task<PagedList<Service>> GetAllServicesAsync(PaginationParameters paginationParameters);
+        Task<ICollection<Service>> GetAllServicesAsync();
         Task<ICollection<Service>> GetAvailableServicesAsync(DateTime startingAt, DateTime endingAt);
 
         Task<Service> GetServiceByIdAsync(Guid id);

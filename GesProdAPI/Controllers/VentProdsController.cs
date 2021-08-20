@@ -81,7 +81,7 @@ namespace GesProdAPI.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> CreateVentProd([FromBody] VentProdWriteDto ventProd)
+        public async Task<IActionResult> CreateVentProd([FromBody] VentProdCreateDto ventProd)
         {
             if (ventProd == null)
             {
@@ -108,7 +108,7 @@ namespace GesProdAPI.Controllers
             ventProdEntity.PrixVente = serviceEntity.PrixVente;
             await _repository.VentProd.CreateVentProdAsync(ventProdEntity);
 
-            var venteEntity = await _repository.Vente.GetVenteByIdAsync(ventProd.VentesId);
+            var venteEntity = await _repository.Vente.GetVenteByIdAsync(ventProd.VentesId.Value);
 
             venteEntity.MontantTotal = venteEntity.VentProds.Sum(x => x.PrixVente * x.QteVendu - x.MntRemise);
             venteEntity.VentProds = null;
@@ -119,11 +119,63 @@ namespace GesProdAPI.Controllers
             var ventProdReadDto = _mapper.Map<VentProdReadDto>(ventProdEntity);
             return CreatedAtRoute("VentProdById", new { id = ventProdReadDto.Id }, ventProdReadDto);
         }
+        
 
+
+/*
+        [HttpPost]
+        public async Task<IActionResult> CreateVentProd([FromBody] IEnumerable<VentProdCreateDto> ventProds)
+        {
+            var services = new List<Service>();
+            foreach (var ventProd in ventProds)
+            {
+                if (ventProd == null)
+                {
+                    _logger.LogError("VentProd object sent from ventProd is null.");
+                    return BadRequest("VentProd object is null");
+                }
+
+                if (!ModelState.IsValid)
+                {
+                    _logger.LogError("Invalid ventProdWriteDto object sent from ventProd.");
+                    return BadRequest("Invalid model object");
+                }
+
+                var serviceEntity = await _repository.Service.GetServiceByIdAsync(ventProd.ServicesId);
+
+                if (serviceEntity == null)
+                {
+                    _logger.LogError($"Service with Id: {ventProd.ServicesId}, hasn't been found.");
+                    return NotFound($"Service with Id: {ventProd.ServicesId}");
+                }
+                else
+                {
+                    services.Add(serviceEntity);
+                }
+
+            }
+
+            var ventProdsEntities = _mapper.Map<IEnumerable<VentProd>>(ventProds);
+            ventProdEntity.Id = Guid.NewGuid();
+            ventProdEntity.PrixVente = serviceEntity.PrixVente;
+            await _repository.VentProd.CreateVentProdAsync(ventProdEntity);
+
+            var venteEntity = await _repository.Vente.GetVenteByIdAsync(ventProd.VentesId.Value);
+
+            venteEntity.MontantTotal = venteEntity.VentProds.Sum(x => x.PrixVente * x.QteVendu - x.MntRemise);
+            venteEntity.VentProds = null;
+            await _repository.Vente.UpdateVenteAsync(venteEntity);
+
+            await _repository.SaveAsync();
+
+            var ventProdReadDto = _mapper.Map<VentProdReadDto>(ventProdEntity);
+            return CreatedAtRoute("VentProdById", new { id = ventProdReadDto.Id }, ventProdReadDto);
+        }
+        */
 
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateVentProd(Guid id, [FromBody] VentProdWriteDto ventProdWriteDto)
+        public async Task<IActionResult> UpdateVentProd(Guid id, [FromBody] VentProdCreateDto ventProdWriteDto)
         {
             if (ventProdWriteDto == null)
             {
@@ -160,7 +212,7 @@ namespace GesProdAPI.Controllers
             ventProdEntity.PrixVente = newServiceEntity.PrixVente;
             await _repository.VentProd.UpdateVentProdAsync(ventProdEntity);
 
-            var newVenteEntity = await _repository.Vente.GetVenteByIdAsync(newVenteId);
+            var newVenteEntity = await _repository.Vente.GetVenteByIdAsync(newVenteId.Value);
 
             if (newVenteEntity == null)
             {
@@ -201,7 +253,8 @@ namespace GesProdAPI.Controllers
                 await _repository.SaveAsync();
             }
 
-            return NoContent();
+            var ventProdReadDto = _mapper.Map<VentProdReadDto>(newVenteEntity);
+            return Ok(ventProdReadDto);
         }
 
 

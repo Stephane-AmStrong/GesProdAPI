@@ -143,7 +143,8 @@ namespace GesProdAPI.Controllers
             await _repository.Category.UpdateCategoryAsync(categoryEntity);
             await _repository.SaveAsync();
 
-            return NoContent();
+            var categoryReadDto = _mapper.Map<CategoryReadDto>(categoryEntity);
+            return Ok(categoryReadDto);
         }
 
 

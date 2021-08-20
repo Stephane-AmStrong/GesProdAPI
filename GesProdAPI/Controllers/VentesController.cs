@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using static Contracts.IVentProdRepository;
 
 namespace GesProdAPI.Controllers
 {
@@ -24,12 +25,14 @@ namespace GesProdAPI.Controllers
         private readonly ILoggerManager _logger;
         private readonly IRepositoryWrapper _repository;
         private readonly IMapper _mapper;
+        private readonly string _baseURL;
 
-        public VentesController(ILoggerManager logger, IRepositoryWrapper repository, IMapper mapper)
+        public VentesController(ILoggerManager logger, IRepositoryWrapper repository, IMapper mapper, IHttpContextAccessor httpContextAccessor)
         {
             _logger = logger;
             _repository = repository;
             _mapper = mapper;
+            _baseURL = string.Concat(httpContextAccessor.HttpContext.Request.Scheme, "://", httpContextAccessor.HttpContext.Request.Host);
         }
 
 
@@ -54,6 +57,14 @@ namespace GesProdAPI.Controllers
 
             var ventesReadDto = _mapper.Map<IEnumerable<VenteReadDto>>(ventes);
 
+            ventesReadDto.ToList().ForEach(venteReadDto =>
+            {
+                venteReadDto.VentProds.ToList().ForEach( ventProd =>
+                {
+                    if (ventProd.Service.Photo != null) ventProd.Service.Photo = $"{_baseURL}{ventProd.Service.Photo.Replace("~", "")}";
+                });
+            });
+
             return Ok(ventesReadDto);
         }
 
@@ -71,9 +82,15 @@ namespace GesProdAPI.Controllers
             }
             else
             {
-                _logger.LogInfo($"Returned venteWriteDto with id: {id}");
+                _logger.LogInfo($"Returned venteUpdateDto with id: {id}");
 
                 var venteReadDto = _mapper.Map<VenteReadDto>(vente);
+
+                venteReadDto.VentProds.ToList().ForEach(ventProd =>
+                {
+                    if (ventProd.Service.Photo != null) ventProd.Service.Photo = $"{_baseURL}{ventProd.Service.Photo.Replace("~", "")}";
+                });
+
                 return Ok(venteReadDto);
             }
         }
@@ -82,19 +99,30 @@ namespace GesProdAPI.Controllers
 
 
 
-        [HttpGet("Chiffre-affaires/{debutPeriode}/{finPeriode}")]
-        public async Task<IActionResult> GetTurnover(DateTime debutPeriode, DateTime finPeriode)
+        [HttpGet("Chiffre-affaires/{debutPeriode}/{finPeriode}/declared")]
+        public async Task<IActionResult> GetTurnoverTheDeclaredOnes(DateTime debutPeriode, DateTime finPeriode)
         {
-            _logger.LogInfo($"Returned Turnover from {debutPeriode} to {finPeriode}.");
-            return Ok(await _repository.VentProd.GetTurnoverAsync(debutPeriode, finPeriode));
+            _logger.LogInfo($"Returned declared Turnover from {debutPeriode} to {finPeriode}.");
+            return Ok(await _repository.VentProd.GetTurnoverAsync(debutPeriode, finPeriode, Target.TheDeclaredOnes));
+        }
+        
+
+
+
+
+        [HttpGet("Chiffre-affaires/{debutPeriode}/{finPeriode}/non-declared")]
+        public async Task<IActionResult> GetTurnoverTheNonDeclaredOnes(DateTime debutPeriode, DateTime finPeriode)
+        {
+            _logger.LogInfo($"Returned non-declared Turnover from {debutPeriode} to {finPeriode}.");
+            return Ok(await _repository.VentProd.GetTurnoverAsync(debutPeriode, finPeriode, Target.TheNonDeclaredOnes));
         }
 
 
 
 
 
-        [HttpGet("Chiffre-affaires/{debutPeriode}/{finPeriode}/categorie/{categoryId}")]
-        public async Task<IActionResult> GetTurnoverCategory(DateTime debutPeriode, DateTime finPeriode, Guid? categoryId)
+        [HttpGet("Chiffre-affaires/{debutPeriode}/{finPeriode}/categorie/{categoryId}/declared")]
+        public async Task<IActionResult> GetTurnoverCategoryTheDeclaredOnes(DateTime debutPeriode, DateTime finPeriode, Guid? categoryId)
         {
             _logger.LogInfo($"Returning Category with id {categoryId}.");
             var category = await _repository.Category.GetCategoryByIdAsync(categoryId.Value);
@@ -105,16 +133,76 @@ namespace GesProdAPI.Controllers
                 return NotFound($"Category with id: {categoryId}, hasn't been found.");
             }
 
-            _logger.LogInfo($"Returned Turnover from {debutPeriode} to {finPeriode} having categoryId equal to '{categoryId}'");
-            return Ok(_repository.VentProd.GetTurnoverAsync(debutPeriode, finPeriode, category));
+            _logger.LogInfo($"Returned declared Turnover from {debutPeriode} to {finPeriode} having categoryId equal to '{categoryId}'");
+            return Ok(await _repository.VentProd.GetTurnoverAsync(debutPeriode, finPeriode, category, Target.TheDeclaredOnes));
+        }
+        
+
+
+
+
+        [HttpGet("Chiffre-affaires/{debutPeriode}/{finPeriode}/categorie/{categoryId}/non-declared")]
+        public async Task<IActionResult> GetTurnoverCategoryTheNonDeclaredOnes(DateTime debutPeriode, DateTime finPeriode, Guid? categoryId)
+        {
+            _logger.LogInfo($"Returning Category with id {categoryId}.");
+            var category = await _repository.Category.GetCategoryByIdAsync(categoryId.Value);
+
+            if (category == null)
+            {
+                _logger.LogError($"Category with id: {categoryId}, hasn't been found.");
+                return NotFound($"Category with id: {categoryId}, hasn't been found.");
+            }
+
+            _logger.LogInfo($"Returned non-declared Turnover from {debutPeriode} to {finPeriode} having categoryId equal to '{categoryId}'");
+            return Ok(await _repository.VentProd.GetTurnoverAsync(debutPeriode, finPeriode, category, Target.TheNonDeclaredOnes));
         }
 
 
 
 
 
-        [HttpGet("Chiffre-affaires/{debutPeriode}/{finPeriode}/service/{serviceId}")]
-        public async Task<IActionResult> GetTurnoverService(DateTime debutPeriode, DateTime finPeriode, Guid? serviceId)
+        [HttpGet("Chiffre-affaires/{debutPeriode}/{finPeriode}/produit/{produitId}/declared")]
+        public async Task<IActionResult> GetTurnoverProduitTheDeclaredOnes(DateTime debutPeriode, DateTime finPeriode, Guid? produitId)
+        {
+            _logger.LogInfo($"Returning Produit with id {produitId}.");
+            var produit = await _repository.Produit.GetProduitByIdAsync(produitId.Value);
+
+            if (produit == null)
+            {
+                _logger.LogError($"Produit with id: {produitId}, hasn't been found.");
+                return NotFound($"Produit with id: {produitId}, hasn't been found.");
+            }
+
+            _logger.LogInfo($"Returned declared Turnover from {debutPeriode} to {finPeriode} having produitId equal to '{produitId}'");
+            return Ok(await _repository.VentProd.GetTurnoverAsync(debutPeriode, finPeriode, produit, Target.TheDeclaredOnes));
+        }
+        
+
+
+
+
+        [HttpGet("Chiffre-affaires/{debutPeriode}/{finPeriode}/produit/{produitId}/non-declared")]
+        public async Task<IActionResult> GetTurnoverProduitTheNonDeclaredOnes(DateTime debutPeriode, DateTime finPeriode, Guid? produitId)
+        {
+            _logger.LogInfo($"Returning Produit with id {produitId}.");
+            var produit = await _repository.Produit.GetProduitByIdAsync(produitId.Value);
+
+            if (produit == null)
+            {
+                _logger.LogError($"Produit with id: {produitId}, hasn't been found.");
+                return NotFound($"Produit with id: {produitId}, hasn't been found.");
+            }
+
+            _logger.LogInfo($"Returned non-declared Turnover from {debutPeriode} to {finPeriode} having produitId equal to '{produitId}'");
+            return Ok(await _repository.VentProd.GetTurnoverAsync(debutPeriode, finPeriode, produit, Target.TheNonDeclaredOnes));
+        }
+        
+
+
+
+
+        [HttpGet("Chiffre-affaires/{debutPeriode}/{finPeriode}/service/{serviceId}/declared")]
+        public async Task<IActionResult> GetTurnoverServiceTheDeclaredOnes(DateTime debutPeriode, DateTime finPeriode, Guid? serviceId)
         {
             _logger.LogInfo($"Returning Service with id {serviceId}.");
             var service = await _repository.Service.GetServiceByIdAsync(serviceId.Value);
@@ -125,15 +213,35 @@ namespace GesProdAPI.Controllers
                 return NotFound($"Service with id: {serviceId}, hasn't been found.");
             }
 
-            _logger.LogInfo($"Returned Turnover from {debutPeriode} to {finPeriode} having serviceId equal to '{serviceId}'");
-            return Ok(_repository.VentProd.GetTurnoverAsync(debutPeriode, finPeriode, service));
+            _logger.LogInfo($"Returned declared Turnover from {debutPeriode} to {finPeriode} having serviceId equal to '{serviceId}'");
+            return Ok(await _repository.VentProd.GetTurnoverAsync(debutPeriode, finPeriode, service, Target.TheDeclaredOnes));
+        }
+        
+
+
+
+
+        [HttpGet("Chiffre-affaires/{debutPeriode}/{finPeriode}/service/{serviceId}/non-declared")]
+        public async Task<IActionResult> GetTurnoverServiceTheNonDeclaredOnes(DateTime debutPeriode, DateTime finPeriode, Guid? serviceId)
+        {
+            _logger.LogInfo($"Returning Service with id {serviceId}.");
+            var service = await _repository.Service.GetServiceByIdAsync(serviceId.Value);
+
+            if (service == null)
+            {
+                _logger.LogError($"Service with id: {serviceId}, hasn't been found.");
+                return NotFound($"Service with id: {serviceId}, hasn't been found.");
+            }
+
+            _logger.LogInfo($"Returned non-declared Turnover from {debutPeriode} to {finPeriode} having serviceId equal to '{serviceId}'");
+            return Ok(await _repository.VentProd.GetTurnoverAsync(debutPeriode, finPeriode, service, Target.TheNonDeclaredOnes));
         }
 
 
 
 
-        [HttpGet("Chiffre-affaires/{debutPeriode}/{finPeriode}/utilisateur/{utilisateurId}")]
-        public async Task<IActionResult> GetTurnoverUtilisateur(DateTime debutPeriode, DateTime finPeriode, Guid? utilisateurId)
+        [HttpGet("Chiffre-affaires/{debutPeriode}/{finPeriode}/utilisateur/{utilisateurId}/declared")]
+        public async Task<IActionResult> GetTurnoverUtilisateurTheDeclaredOnes(DateTime debutPeriode, DateTime finPeriode, Guid? utilisateurId)
         {
             _logger.LogInfo($"Returning Utilisateur with id {utilisateurId}.");
             var utilisateur = await _repository.Utilisateur.GetUtilisateurByIdAsync(utilisateurId.Value);
@@ -144,8 +252,27 @@ namespace GesProdAPI.Controllers
                 return NotFound($"Utilisateur with id: {utilisateurId}, hasn't been found.");
             }
 
-            _logger.LogInfo($"Returned Turnover from {debutPeriode} to {finPeriode} having utilisateurId equal to '{utilisateurId}'");
-            return Ok(_repository.VentProd.GetTurnoverAsync(debutPeriode, finPeriode, utilisateur.Id));
+            _logger.LogInfo($"Returned declared Turnover from {debutPeriode} to {finPeriode} having utilisateurId equal to '{utilisateurId}'");
+            return Ok(await _repository.VentProd.GetTurnoverAsync(debutPeriode, finPeriode, utilisateur.Id, Target.TheDeclaredOnes));
+        }
+        
+
+
+
+        [HttpGet("Chiffre-affaires/{debutPeriode}/{finPeriode}/utilisateur/{utilisateurId}/non-declared")]
+        public async Task<IActionResult> GetTurnoverUtilisateurTheNonDeclaredOnes(DateTime debutPeriode, DateTime finPeriode, Guid? utilisateurId)
+        {
+            _logger.LogInfo($"Returning Utilisateur with id {utilisateurId}.");
+            var utilisateur = await _repository.Utilisateur.GetUtilisateurByIdAsync(utilisateurId.Value);
+
+            if (utilisateur == null)
+            {
+                _logger.LogError($"Utilisateur with id: {utilisateurId}, hasn't been found.");
+                return NotFound($"Utilisateur with id: {utilisateurId}, hasn't been found.");
+            }
+
+            _logger.LogInfo($"Returned non-declared Turnover from {debutPeriode} to {finPeriode} having utilisateurId equal to '{utilisateurId}'");
+            return Ok(await _repository.VentProd.GetTurnoverAsync(debutPeriode, finPeriode, utilisateur.Id, Target.TheNonDeclaredOnes));
         }
 
 
@@ -163,21 +290,31 @@ namespace GesProdAPI.Controllers
 
             if (!ModelState.IsValid)
             {
-                _logger.LogError("Invalid venteWriteDto object sent from vente.");
+                _logger.LogError("Invalid venteUpdateDto object sent from vente.");
                 return BadRequest("Invalid model object");
             }
 
+            if (vente.ClientsId == null) vente.ClientsId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
             var venteEntity = _mapper.Map<Vente>(vente);
+
+            var services = await _repository.Service.GetAllServicesAsync();
 
             venteEntity.Id = Guid.NewGuid();
             venteEntity.NumFact = await _repository.Vente.GetNextNumberAsync();
             venteEntity.DateEnr = DateTime.Now;
             venteEntity.TypeFacture = "FV";
             venteEntity.ModePaiement = "A";
-            venteEntity.ClientsId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
             venteEntity.IdUserEnr = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-            
-            //venteEntity.LibelleFacture = $"Reservation Client : {AppUser.FindFirst("Name").Value} {AppUser.FindFirst("").Value} ";
+
+
+            venteEntity.VentProds.ToList().ForEach(vendProd =>
+            {
+                vendProd.Id = Guid.NewGuid();
+                vendProd.PrixVente = services.First(x=>x.Id == vendProd.ServicesId.Value).PrixVente;
+                vendProd.TauxImposition = services.First(x=>x.Id == vendProd.ServicesId.Value).TauxImposition;
+            });
+
             venteEntity.MontantTotal = venteEntity.VentProds.Sum(x => x.PrixVente * x.QteVendu - x.MntRemise);
 
             await _repository.Vente.CreateVenteAsync(venteEntity);
@@ -189,51 +326,10 @@ namespace GesProdAPI.Controllers
         
 
 
-
-
-        [HttpPost("for/{clientId}")]
-        public async Task<IActionResult> CreateVente([FromBody] VenteCreateDto vente, Guid clientId)
-        {
-            if (vente == null)
-            {
-                _logger.LogError("Vente object sent from vente is null.");
-                return BadRequest("Vente object is null");
-            }
-
-            if (!ModelState.IsValid)
-            {
-                _logger.LogError("Invalid venteWriteDto object sent from vente.");
-                return BadRequest("Invalid model object");
-            }
-
-            var venteEntity = _mapper.Map<Vente>(vente);
-
-            venteEntity.Id = Guid.NewGuid();
-            venteEntity.NumFact = await _repository.Vente.GetNextNumberAsync();
-            venteEntity.DateEnr = DateTime.Now;
-            venteEntity.TypeFacture = "FV";
-            venteEntity.ModePaiement = "A";
-            venteEntity.ClientsId = clientId;
-            venteEntity.IdUserEnr = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-            
-            //venteEntity.LibelleFacture = $"Reservation Client : {AppUser.FindFirst("Name").Value} {AppUser.FindFirst("").Value} ";
-            venteEntity.MontantTotal = venteEntity.VentProds.Sum(x => x.PrixVente * x.QteVendu - x.MntRemise);
-
-            await _repository.Vente.CreateVenteAsync(venteEntity);
-            await _repository.SaveAsync();
-
-            var venteReadDto = _mapper.Map<VenteReadDto>(venteEntity);
-            return CreatedAtRoute("VenteById", new { id = venteReadDto.Id }, venteReadDto);
-        }
-
-
-
-
-
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateVente(Guid id, [FromBody] VenteUpdateDto venteWriteDto)
+        public async Task<IActionResult> UpdateVente(Guid id, [FromBody] VenteUpdateDto venteUpdateDto)
         {
-            if (venteWriteDto == null)
+            if (venteUpdateDto == null)
             {
                 _logger.LogError("Vente object sent from vente is null.");
                 return BadRequest("Vente object is null");
@@ -241,7 +337,7 @@ namespace GesProdAPI.Controllers
 
             if (!ModelState.IsValid)
             {
-                _logger.LogError("Invalid venteWriteDto object sent from vente.");
+                _logger.LogError("Invalid venteUpdateDto object sent from vente.");
                 return BadRequest("Invalid model object");
             }
 
@@ -252,23 +348,36 @@ namespace GesProdAPI.Controllers
                 return NotFound($"Vente with id: {id}, hasn't been found.");
             }
 
-            _mapper.Map(venteWriteDto, venteEntity);
+            _mapper.Map(venteUpdateDto, venteEntity);
+            var services = await _repository.Service.GetAllServicesAsync();
 
 
-            
             venteEntity.DateEnr = DateTime.Now;
-            venteEntity.TypeFacture = "FV";
-            venteEntity.ModePaiement = "A";
-            venteEntity.ClientsId = venteWriteDto.ClientsId;
+            //venteEntity.TypeFacture = "FV";
+            //venteEntity.ModePaiement = "A";
+            //venteEntity.ClientsId = venteUpdateDto.ClientsId;
             venteEntity.IdUserEnr = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-            
-            venteEntity.LibelleFacture = $"Reservation Client : {User.FindFirst("Name").Value} {User.FindFirst("").Value} ";
+
+
+            venteEntity.VentProds.ToList().ForEach(vendProd =>
+            {
+                if(vendProd.Id == Guid.Empty) vendProd.Id = Guid.NewGuid();
+                vendProd.PrixVente = services.First(x => x.Id == vendProd.ServicesId.Value).PrixVente;
+                vendProd.TauxImposition = services.First(x => x.Id == vendProd.ServicesId.Value).TauxImposition;
+                vendProd.VentesId = venteEntity.Id;
+            });
+
+
+
             venteEntity.MontantTotal = venteEntity.VentProds.Sum(x => x.PrixVente * x.QteVendu - x.MntRemise);
 
-            await _repository.Vente.UpdateVenteAsync(venteEntity);
+            //await _repository.Vente.UpdateVenteAsync(venteEntity);
+            //await _repository.VentProd.UpdateVentProdAsync(venteEntity.VentProds);
             await _repository.SaveAsync();
 
-            return NoContent();
+            var venteReadDto = _mapper.Map<VenteReadDto>(venteEntity);
+
+            return Ok(venteReadDto);
         }
 
 

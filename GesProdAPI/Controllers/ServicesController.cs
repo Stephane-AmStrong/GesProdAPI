@@ -94,6 +94,11 @@ namespace GesProdAPI.Controllers
 
             var servicesReadDto = _mapper.Map<IEnumerable<ServiceReadDto>>(servicesDisponible);
 
+            servicesReadDto.ToList().ForEach(serviceReadDto =>
+            {
+                if (serviceReadDto.Photo != null) serviceReadDto.Photo = $"{_baseURL}{serviceReadDto.Photo.Replace("~", "")}";
+            });
+
             return Ok(servicesReadDto);
 
         }
@@ -164,7 +169,9 @@ namespace GesProdAPI.Controllers
             await _repository.Service.UpdateServiceAsync(serviceEntity);
             await _repository.SaveAsync();
 
-            return NoContent();
+            var serviceReadDto = _mapper.Map<ServiceReadDto>(serviceEntity);
+
+            return Ok(serviceReadDto);
         }
 
 
@@ -172,8 +179,8 @@ namespace GesProdAPI.Controllers
         [HttpPut("{id}/upload-picture")]
         public async Task<ActionResult<ServiceReadDto>> UploadPicture(Guid id, [FromForm] IFormFile picture)
         {
-            var produitEntity = await _repository.Service.GetServiceByIdAsync(id);
-            if (produitEntity == null) return NotFound();
+            var serviceEntity = await _repository.Service.GetServiceByIdAsync(id);
+            if (serviceEntity == null) return NotFound();
 
             if (picture != null)
             {
@@ -188,19 +195,19 @@ namespace GesProdAPI.Controllers
                 }
                 else
                 {
-                    produitEntity.Photo = uploadResult;
+                    serviceEntity.Photo = uploadResult;
                 }
             }
 
-            await _repository.Service.UpdateServiceAsync(produitEntity);
+            await _repository.Service.UpdateServiceAsync(serviceEntity);
 
             await _repository.SaveAsync();
 
-            var produitReadDto = _mapper.Map<ServiceReadDto>(produitEntity);
+            var serviceReadDto = _mapper.Map<ServiceReadDto>(serviceEntity);
 
-            if (produitReadDto.Photo != null) produitReadDto.Photo = $"{_baseURL}{produitReadDto.Photo}";
+            if (serviceReadDto.Photo != null) serviceReadDto.Photo = $"{_baseURL}{serviceReadDto.Photo}";
 
-            return Ok(produitReadDto);
+            return Ok(serviceReadDto);
         }
 
 

@@ -141,7 +141,8 @@ namespace GesProdAPI.Controllers
             await _repository.Utilisateur.UpdateUtilisateurAsync(utilisateurEntity);
             await _repository.SaveAsync();
 
-            return NoContent();
+            var utilisateurReadDto = _mapper.Map<UtilisateurReadDto>(utilisateurEntity);
+            return Ok(utilisateurReadDto);
         }
 
 

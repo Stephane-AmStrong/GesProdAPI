@@ -152,7 +152,9 @@ namespace GesProdAPI.Controllers
             await _repository.Produit.UpdateProduitAsync(produitEntity);
             await _repository.SaveAsync();
 
-            return NoContent();
+            var produitReadDto = _mapper.Map<ProduitReadDto>(produitEntity);
+
+            return Ok(produitReadDto);
         }
 
 

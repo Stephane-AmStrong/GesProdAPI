@@ -7,6 +7,11 @@ namespace Entities.DataTransfertObjects
 {
     public partial class VenteUpdateDto
     {
+        public VenteUpdateDto()
+        {
+            VentProds = new HashSet<VentProdUpdateDto>();
+        }
+
         public DateTime DateVent { get; set; }
         public double TauxRemise { get; set; }
         public string TypeFacture { get; set; }
@@ -32,5 +37,6 @@ namespace Entities.DataTransfertObjects
         public string CompteurTypeFactureMecefAvoir { get; set; }
         public string DateMecefAvoir { get; set; }
         public bool Api { get; set; }
+        public virtual ICollection<VentProdUpdateDto> VentProds { get; set; }
     }
 }

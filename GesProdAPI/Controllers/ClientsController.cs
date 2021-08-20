@@ -142,7 +142,8 @@ namespace GesProdAPI.Controllers
             await _repository.Client.UpdateClientAsync(clientEntity);
             await _repository.SaveAsync();
 
-            return NoContent();
+            var clientReadDto = _mapper.Map<ClientReadDto>(clientEntity);
+            return Ok(clientReadDto);
         }
 
 

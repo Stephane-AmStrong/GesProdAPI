@@ -11,15 +11,24 @@ namespace Contracts
     {
         Task<PagedList<VentProd>> GetAllVentProdsAsync(PaginationParameters paginationParameters);
 
-        Task<long> GetTurnoverAsync(DateTime startingAt, DateTime endingAt);
-        Task<long> GetTurnoverAsync(DateTime startingAt, DateTime endingAt, Category category);
-        Task<long> GetTurnoverAsync(DateTime startingAt, DateTime endingAt, Service service);
-        Task<long> GetTurnoverAsync(DateTime startingAt, DateTime endingAt, Guid utilisateurId);
+        Task<long> GetTurnoverAsync(DateTime startingAt, DateTime endingAt, Target target);
+        Task<long> GetTurnoverAsync(DateTime startingAt, DateTime endingAt, Category category, Target target);
+        Task<long> GetTurnoverAsync(DateTime startingAt, DateTime endingAt, Produit produit, Target target);
+        Task<long> GetTurnoverAsync(DateTime startingAt, DateTime endingAt, Service service, Target target);
+        Task<long> GetTurnoverAsync(DateTime startingAt, DateTime endingAt, Guid utilisateurId, Target target);
+
 
         Task<VentProd> GetVentProdByIdAsync(Guid id);
 
         Task CreateVentProdAsync(VentProd ventProd);
         Task UpdateVentProdAsync(VentProd ventProd);
+        Task UpdateVentProdAsync(IEnumerable<VentProd> ventProds);
         Task DeleteVentProdAsync(VentProd ventProd);
+
+        public enum Target
+        {
+            TheDeclaredOnes,
+            TheNonDeclaredOnes
+        }
     }
 }

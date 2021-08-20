@@ -410,7 +410,7 @@ namespace Entities
                 entity.HasOne(d => d.Vente)
                     .WithMany(p => p.VentProds)
                     .HasForeignKey(d => d.VentesId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_VentesVent_Prod");
             });
 
@@ -487,7 +487,7 @@ namespace Entities
                 entity.HasOne(d => d.Client)
                     .WithMany(p => p.Ventes)
                     .HasForeignKey(d => d.ClientsId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_ClientsVentes");
 
                 entity.HasOne(d => d.NumeroCompte)

@@ -20,6 +20,7 @@ namespace Repository
         {
             return await Task.Run(() =>
                 PagedList<Vente>.ToPagedList(FindAll()
+                .Include(x => x.Client)
                 .Include(x => x.VentProds)
                 .ThenInclude(x => x.Service)
                 .ThenInclude(x => x.Category)
@@ -35,6 +36,7 @@ namespace Repository
         public async Task<Vente> GetVenteByIdAsync(Guid id)
         {
             return await FindByCondition(vente => vente.Id.Equals(id))
+                .Include(x => x.Client)
                 .Include(x => x.VentProds)
                 .ThenInclude(x => x.Service)
                 .ThenInclude(x => x.Category)

@@ -1,0 +1,1 @@
+2021-08-15 23:48:42.5183 INFO Utilisateur Named: AmStrong Stéphane has logged in successfully

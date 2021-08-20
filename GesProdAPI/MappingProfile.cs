@@ -44,6 +44,7 @@ namespace GesProdAPI
 
             CreateMap<Category, CategoryReadDto>();
             CreateMap<CategoryWriteDto, Category>();
+            CreateMap<CategoryReadDto, Category>();
 
             CreateMap<Client, ClientReadDto>();
             CreateMap<AuthCustomerReadDto, Client>()
@@ -84,6 +85,7 @@ namespace GesProdAPI
             
             CreateMap<Service, ServiceReadDto>();
             CreateMap<ServiceWriteDto, Service>();
+            CreateMap<ServiceReadDto, Service>();
             
             CreateMap<Site, SiteReadDto>();
             CreateMap<SiteWriteDto, Site>();
@@ -111,11 +113,12 @@ namespace GesProdAPI
 
 
             CreateMap<VentProd, VentProdReadDto>();
-            CreateMap<VentProdWriteDto, VentProd>();
+            CreateMap<VentProdCreateDto, VentProd>();
+            CreateMap<VentProdUpdateDto, VentProd>();
             
             CreateMap<Vente, VenteReadDto>();
-            CreateMap<VenteCreateDto, Vente>();
             CreateMap<VenteUpdateDto, Vente>();
+            CreateMap<VenteCreateDto, Vente>();
             
             CreateMap<Visibilite, VisibiliteReadDto>();
             CreateMap<VisibiliteWriteDto, Visibilite>();
