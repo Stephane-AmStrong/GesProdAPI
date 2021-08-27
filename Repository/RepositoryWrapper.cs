@@ -19,8 +19,10 @@ namespace Repository
         private IAuthenticationRepository _authenticationRepository;
         private IClientRepository _clientRepository;
         private ICategoryRepository _categoryRepository;
+        private IProfilRepository _profilRepository;
         private IProduitRepository _produitRepository;
         private IServiceRepository _serviceRepository;
+        private ISiteRepository _siteRepository;
         private IUtilisateurRepository _utilisateurRepository;
         private IVentProdRepository _ventProdRepository;
         private IVenteRepository _venteRepository;
@@ -86,6 +88,18 @@ namespace Repository
             }
         }
 
+        public IProfilRepository Profil
+        {
+            get
+            {
+                if (_profilRepository == null)
+                {
+                    _profilRepository = new ProfilRepository(_repoContext);
+                }
+                return _profilRepository;
+            }
+        }
+        
         public IProduitRepository Produit 
         {
             get
@@ -98,6 +112,18 @@ namespace Repository
             }
         }
 
+        public ISiteRepository Site
+        {
+            get
+            {
+                if (_siteRepository == null)
+                {
+                    _siteRepository = new SiteRepository(_repoContext);
+                }
+                return _siteRepository;
+            }
+        }
+        
         public IServiceRepository Service
         {
             get

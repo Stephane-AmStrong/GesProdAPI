@@ -226,17 +226,23 @@ namespace Entities.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Addresse")
+                    b.Property<string>("Adresse")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Ifu")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("IFU");
 
+                    b.Property<string>("Nom")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("NomEntreprise")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Nom_Entreprise");
+
+                    b.Property<string>("Prenom")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Tel")
                         .IsRequired()
@@ -291,7 +297,7 @@ namespace Entities.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Addresse")
+                    b.Property<string>("Adresse")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -575,7 +581,7 @@ namespace Entities.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Addresse")
+                    b.Property<string>("Adresse")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -617,14 +623,14 @@ namespace Entities.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("ProfilsId")
+                    b.Property<Guid>("ProfilsId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Pwd")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("SitesId")
+                    b.Property<Guid>("SitesId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -1035,12 +1041,14 @@ namespace Entities.Migrations
                     b.HasOne("Entities.Models.Profil", "Profil")
                         .WithMany("Utilisateurs")
                         .HasForeignKey("ProfilsId")
-                        .HasConstraintName("FK_ProfilsUtilisateurs");
+                        .HasConstraintName("FK_ProfilsUtilisateurs")
+                        .IsRequired();
 
                     b.HasOne("Entities.Models.Site", "Site")
                         .WithMany("Utilisateurs")
                         .HasForeignKey("SitesId")
-                        .HasConstraintName("FK_SitesUtilisateurs");
+                        .HasConstraintName("FK_SitesUtilisateurs")
+                        .IsRequired();
 
                     b.Navigation("Profil");
 
@@ -1063,6 +1071,7 @@ namespace Entities.Migrations
                         .WithMany("VentProds")
                         .HasForeignKey("VentesId")
                         .HasConstraintName("FK_VentesVent_Prod")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Disponibilite");
@@ -1078,6 +1087,7 @@ namespace Entities.Migrations
                         .WithMany("Ventes")
                         .HasForeignKey("ClientsId")
                         .HasConstraintName("FK_ClientsVentes")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Entities.Models.NumeroCompte", "NumeroCompte")

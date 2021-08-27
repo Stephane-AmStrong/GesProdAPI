@@ -49,7 +49,7 @@ namespace GesProdAPI.Controllers
 
             Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
 
-            _logger.LogInfo($"Returned all clients clients from database.");
+            _logger.LogInfo($"Returned all clients from database.");
 
             var clientsReadDto = _mapper.Map<IEnumerable<ClientReadDto>>(clients);
 

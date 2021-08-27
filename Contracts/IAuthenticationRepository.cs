@@ -11,7 +11,8 @@ namespace Contracts
     {
         Task<PagedList<AppUser>> GetAllUsersAsync(PaginationParameters paginationParameters);
         Task<PagedList<AppUser>> GetAllCustomersAsync(PaginationParameters paginationParameters);
-        Task<int> CountAllUsersAsync();
+        Task<int> CountUsersAsync();
+        Task<int> CountCustomersAsync();
         Task<AuthenticationResponse> RegisterUserAsync(AppUser AppUser, string password);
         Task<AuthenticationResponse> LoginWithUserNameAsync(LoginRequest loginRequest, string password);
     }

@@ -52,7 +52,7 @@ namespace GesProdAPI
                 .ForMember(dest => dest.NomEntreprise, src => src.MapFrom(src => src.Name))
                 .ForMember(dest => dest.Tel, src => src.MapFrom(src => src.PhoneNumber))
                 .ForMember(dest => dest.Ifu, src => src.MapFrom(src => src.IFU))
-                .ForMember(dest => dest.Addresse, src => src.MapFrom(src => src.Address));
+                .ForMember(dest => dest.Adresse, src => src.MapFrom(src => src.Address));
 
             CreateMap<AppUser, AuthCustomerReadDto>()
                 .ForMember(dest => dest.Id, src => src.MapFrom(src => src.Id))
@@ -96,20 +96,28 @@ namespace GesProdAPI
 
             CreateMap<AppUser, AuthUserReadDto>()
                 .ForMember(dest => dest.Id, src => src.MapFrom(src => src.Id))
-                .ForMember(dest => dest.Name, src => src.MapFrom(src => src.Name))
-                /*.ForMember(dest => dest.Firstname, src => src.MapFrom(src => src.Name))*/;
+                .ForMember(dest => dest.Name, src => src.MapFrom(src => src.Name));
 
             CreateMap<AuthUserReadDto, Utilisateur>()
                 .ForMember(dest => dest.Id, src => src.MapFrom(src => src.Id))
+                .ForMember(dest => dest.CodeUser, src => src.MapFrom(src => src.CodeUser))
                 .ForMember(dest => dest.Nom, src => src.MapFrom(src => src.Name));
 
 
             CreateMap<Utilisateur, UtilisateurReadDto>();
 
             CreateMap<UtilisateurWriteDto, Utilisateur>();
+
             CreateMap<AuthUserReadDto, Utilisateur>()
                 .ForMember(dest => dest.Id, src => src.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Nom, src => src.MapFrom(src => src.Name));
+            
+            CreateMap<AuthUserReadDto, Client>()
+                .ForMember(dest => dest.Id, src => src.MapFrom(src => src.Id))
+                .ForMember(dest => dest.Nom, src => src.MapFrom(src => src.Name))
+                .ForMember(dest => dest.NomEntreprise, src => src.MapFrom(src => src.Name))
+                //.ForMember(dest => dest.Tel, src => src.MapFrom(src => src.Site.Tel))
+                ;
 
 
             CreateMap<VentProd, VentProdReadDto>();

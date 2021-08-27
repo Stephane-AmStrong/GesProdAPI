@@ -192,7 +192,7 @@ namespace Entities
             {
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
-                entity.Property(e => e.Addresse).IsRequired();
+                entity.Property(e => e.Adresse).IsRequired();
 
                 entity.Property(e => e.DateEnr)
                     .HasColumnType("datetime")
@@ -337,7 +337,7 @@ namespace Entities
             {
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
-                entity.Property(e => e.Addresse).IsRequired();
+                entity.Property(e => e.Adresse).IsRequired();
 
                 entity.Property(e => e.Libelle).IsRequired();
 

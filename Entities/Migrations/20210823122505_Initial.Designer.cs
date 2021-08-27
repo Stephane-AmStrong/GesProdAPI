@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Entities.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20210811163339_entreprise renamed to name")]
-    partial class entrepriserenamedtoname
+    [Migration("20210823122505_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -30,7 +30,7 @@ namespace Entities.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<string>("Adress")
+                    b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("Birthday")
@@ -619,14 +619,14 @@ namespace Entities.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("ProfilsId")
+                    b.Property<Guid>("ProfilsId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Pwd")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("SitesId")
+                    b.Property<Guid>("SitesId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -1037,12 +1037,14 @@ namespace Entities.Migrations
                     b.HasOne("Entities.Models.Profil", "Profil")
                         .WithMany("Utilisateurs")
                         .HasForeignKey("ProfilsId")
-                        .HasConstraintName("FK_ProfilsUtilisateurs");
+                        .HasConstraintName("FK_ProfilsUtilisateurs")
+                        .IsRequired();
 
                     b.HasOne("Entities.Models.Site", "Site")
                         .WithMany("Utilisateurs")
                         .HasForeignKey("SitesId")
-                        .HasConstraintName("FK_SitesUtilisateurs");
+                        .HasConstraintName("FK_SitesUtilisateurs")
+                        .IsRequired();
 
                     b.Navigation("Profil");
 
@@ -1065,6 +1067,7 @@ namespace Entities.Migrations
                         .WithMany("VentProds")
                         .HasForeignKey("VentesId")
                         .HasConstraintName("FK_VentesVent_Prod")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Disponibilite");
@@ -1080,6 +1083,7 @@ namespace Entities.Migrations
                         .WithMany("Ventes")
                         .HasForeignKey("ClientsId")
                         .HasConstraintName("FK_ClientsVentes")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Entities.Models.NumeroCompte", "NumeroCompte")

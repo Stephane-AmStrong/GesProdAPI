@@ -13,12 +13,12 @@ namespace Entities.Models
         }
 
         public Guid Id { get; set; }
-        //public string Nom { get; set; }
-        //public string Prenom { get; set; }
+        public string Nom { get; set; }
+        public string Prenom { get; set; }
         public string Tel { get; set; }
         public string NomEntreprise { get; set; }
         public string Ifu { get; set; }
-        public string Addresse { get; set; }
+        public string Adresse { get; set; }
 
         public virtual ICollection<Vente> Ventes { get; set; }
     }

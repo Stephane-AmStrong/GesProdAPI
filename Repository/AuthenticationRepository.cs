@@ -142,9 +142,14 @@ namespace Repository
 
 
 
-        public async Task<int> CountAllUsersAsync()
+        public async Task<int> CountUsersAsync()
         {
-            return await FindAll().CountAsync();
+            return await FindByCondition(x=>x.IsCustomer==false).CountAsync();
+        }
+
+        public async Task<int> CountCustomersAsync()
+        {
+            return await FindByCondition(x=>x.IsCustomer==true).CountAsync();
         }
     }
 }

@@ -61,13 +61,22 @@ namespace GesProdAPI
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "GesProdAPI v1"));
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "GesProdAPI v1");
+                    //c.RoutePrefix = string.Empty;
+                });
             }
 
             //
             app.UseDeveloperExceptionPage();
             app.UseSwagger();
-            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "GesProdAPI v1"));
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "GesProdAPI v1");
+                //c.RoutePrefix = string.Empty;
+            });
+
             //
             app.ConfigureCustomExceptionMiddleware();
 

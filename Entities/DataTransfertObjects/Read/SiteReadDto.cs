@@ -15,7 +15,7 @@ namespace Entities.DataTransfertObjects
 
         public Guid Id { get; set; }
         public string Libelle { get; set; }
-        public string Addresse { get; set; }
+        public string Adresse { get; set; }
         public string Tel { get; set; }
 
         public virtual ICollection<DisponibiliteReadDto> Disponibilites { get; set; }

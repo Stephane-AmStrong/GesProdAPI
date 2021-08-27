@@ -12,7 +12,9 @@ namespace Contracts
         ICategoryRepository Category { get; }
         IClientRepository Client { get; }
         IProduitRepository Produit { get; }
+        IProfilRepository Profil { get; }
         IServiceRepository Service { get; }
+        ISiteRepository Site { get; }
         IUtilisateurRepository Utilisateur { get; }
         IVentProdRepository VentProd { get; }
         IVenteRepository Vente { get; }

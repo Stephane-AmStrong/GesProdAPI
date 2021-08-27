@@ -81,6 +81,9 @@ namespace GesProdAPI.Controllers
                 _logger.LogInfo($"Returned serviceWriteDto with id: {id}");
 
                 var serviceReadDto = _mapper.Map<ServiceReadDto>(service);
+
+                if (serviceReadDto.Photo != null) serviceReadDto.Photo = $"{_baseURL}{serviceReadDto.Photo.Replace("~", "")}";
+
                 return Ok(serviceReadDto);
             }
         }

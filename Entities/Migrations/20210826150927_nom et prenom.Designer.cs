@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Entities.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20210809151917_user without profil")]
-    partial class userwithoutprofil
+    [Migration("20210826150927_nom et prenom")]
+    partial class nometprenom
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -30,7 +30,7 @@ namespace Entities.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<string>("Adress")
+                    b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("Birthday")
@@ -53,10 +53,6 @@ namespace Entities.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("EnterpriseName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("IFU")
                         .HasColumnType("nvarchar(max)");
 
@@ -71,6 +67,10 @@ namespace Entities.Migrations
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
@@ -235,10 +235,16 @@ namespace Entities.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("IFU");
 
+                    b.Property<string>("Nom")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("NomEntreprise")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Nom_Entreprise");
+
+                    b.Property<string>("Prenom")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Tel")
                         .IsRequired()
@@ -619,14 +625,14 @@ namespace Entities.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("ProfilsId")
+                    b.Property<Guid>("ProfilsId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Pwd")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("SitesId")
+                    b.Property<Guid>("SitesId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -953,133 +959,137 @@ namespace Entities.Migrations
 
             modelBuilder.Entity("Entities.Models.ApproProduit", b =>
                 {
-                    b.HasOne("Entities.Models.Approvisionnement", "Approvisionnements")
+                    b.HasOne("Entities.Models.Approvisionnement", "Approvisionnement")
                         .WithMany("ApproProduits")
                         .HasForeignKey("ApprovisionnementsId")
                         .HasConstraintName("FK_ApprovisionnementsAppro_Produit")
                         .IsRequired();
 
-                    b.HasOne("Entities.Models.Produit", "Produits")
+                    b.HasOne("Entities.Models.Produit", "Produit")
                         .WithMany("ApproProduits")
                         .HasForeignKey("ProduitsId")
                         .HasConstraintName("FK_ProduitsAppro_Produit")
                         .IsRequired();
 
-                    b.Navigation("Approvisionnements");
+                    b.Navigation("Approvisionnement");
 
-                    b.Navigation("Produits");
+                    b.Navigation("Produit");
                 });
 
             modelBuilder.Entity("Entities.Models.ApproSite", b =>
                 {
-                    b.HasOne("Entities.Models.Disponibilite", "Disponibilites")
+                    b.HasOne("Entities.Models.Disponibilite", "Disponibilite")
                         .WithMany("ApproSites")
                         .HasForeignKey("DisponibilitesId")
                         .HasConstraintName("FK_DisponibilitesAppro_Site")
                         .IsRequired();
 
-                    b.Navigation("Disponibilites");
+                    b.Navigation("Disponibilite");
                 });
 
             modelBuilder.Entity("Entities.Models.Approvisionnement", b =>
                 {
-                    b.HasOne("Entities.Models.Fournisseur", "Fournisseurs")
+                    b.HasOne("Entities.Models.Fournisseur", "Fournisseur")
                         .WithMany("Approvisionnements")
                         .HasForeignKey("FournisseursId")
                         .HasConstraintName("FK_FournisseursApprovisionnements")
                         .IsRequired();
 
-                    b.Navigation("Fournisseurs");
+                    b.Navigation("Fournisseur");
                 });
 
             modelBuilder.Entity("Entities.Models.Disponibilite", b =>
                 {
-                    b.HasOne("Entities.Models.Produit", "Produits")
+                    b.HasOne("Entities.Models.Produit", "Produit")
                         .WithMany("Disponibilites")
                         .HasForeignKey("ProduitsId")
                         .HasConstraintName("FK_ProduitsDisponibilites")
                         .IsRequired();
 
-                    b.HasOne("Entities.Models.Site", "Sites")
+                    b.HasOne("Entities.Models.Site", "Site")
                         .WithMany("Disponibilites")
                         .HasForeignKey("SitesId")
                         .HasConstraintName("FK_SitesDisponibilites");
 
-                    b.Navigation("Produits");
+                    b.Navigation("Produit");
 
-                    b.Navigation("Sites");
+                    b.Navigation("Site");
                 });
 
             modelBuilder.Entity("Entities.Models.Produit", b =>
                 {
-                    b.HasOne("Entities.Models.Category", "Categories")
+                    b.HasOne("Entities.Models.Category", "Category")
                         .WithMany("Produits")
                         .HasForeignKey("CategoriesId")
                         .HasConstraintName("FK_CategoriesProduits")
                         .IsRequired();
 
-                    b.Navigation("Categories");
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("Entities.Models.Service", b =>
                 {
-                    b.HasOne("Entities.Models.Category", "Categories")
+                    b.HasOne("Entities.Models.Category", "Category")
                         .WithMany("Services")
                         .HasForeignKey("CategoriesId")
                         .HasConstraintName("FK_Services_Categories")
                         .IsRequired();
 
-                    b.Navigation("Categories");
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("Entities.Models.Utilisateur", b =>
                 {
-                    b.HasOne("Entities.Models.Profil", "Profils")
+                    b.HasOne("Entities.Models.Profil", "Profil")
                         .WithMany("Utilisateurs")
                         .HasForeignKey("ProfilsId")
-                        .HasConstraintName("FK_ProfilsUtilisateurs");
+                        .HasConstraintName("FK_ProfilsUtilisateurs")
+                        .IsRequired();
 
-                    b.HasOne("Entities.Models.Site", "Sites")
+                    b.HasOne("Entities.Models.Site", "Site")
                         .WithMany("Utilisateurs")
                         .HasForeignKey("SitesId")
-                        .HasConstraintName("FK_SitesUtilisateurs");
+                        .HasConstraintName("FK_SitesUtilisateurs")
+                        .IsRequired();
 
-                    b.Navigation("Profils");
+                    b.Navigation("Profil");
 
-                    b.Navigation("Sites");
+                    b.Navigation("Site");
                 });
 
             modelBuilder.Entity("Entities.Models.VentProd", b =>
                 {
-                    b.HasOne("Entities.Models.Disponibilite", "Disponibilites")
+                    b.HasOne("Entities.Models.Disponibilite", "Disponibilite")
                         .WithMany("VentProds")
                         .HasForeignKey("DisponibilitesId")
                         .HasConstraintName("FK_DisponibilitesVent_Prod");
 
-                    b.HasOne("Entities.Models.Service", "Services")
+                    b.HasOne("Entities.Models.Service", "Service")
                         .WithMany("VentProds")
                         .HasForeignKey("ServicesId")
                         .HasConstraintName("FK_Vent_Prod_Vent_Prod");
 
-                    b.HasOne("Entities.Models.Vente", "Ventes")
+                    b.HasOne("Entities.Models.Vente", "Vente")
                         .WithMany("VentProds")
                         .HasForeignKey("VentesId")
                         .HasConstraintName("FK_VentesVent_Prod")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Disponibilites");
+                    b.Navigation("Disponibilite");
 
-                    b.Navigation("Services");
+                    b.Navigation("Service");
 
-                    b.Navigation("Ventes");
+                    b.Navigation("Vente");
                 });
 
             modelBuilder.Entity("Entities.Models.Vente", b =>
                 {
-                    b.HasOne("Entities.Models.Client", "Clients")
+                    b.HasOne("Entities.Models.Client", "Client")
                         .WithMany("Ventes")
                         .HasForeignKey("ClientsId")
                         .HasConstraintName("FK_ClientsVentes")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Entities.Models.NumeroCompte", "NumeroCompte")
@@ -1087,7 +1097,7 @@ namespace Entities.Migrations
                         .HasForeignKey("NumeroCompteId")
                         .HasConstraintName("FK_NumeroCompteVentes");
 
-                    b.Navigation("Clients");
+                    b.Navigation("Client");
 
                     b.Navigation("NumeroCompte");
                 });

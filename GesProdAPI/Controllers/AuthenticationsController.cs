@@ -34,13 +34,23 @@ namespace GesProdAPI.Controllers
 
 
 
-        //GET api/authentications/count
-        [HttpGet("count")]
+        //GET api/authentications/users/count
+        [HttpGet("users/count")]
         [AllowAnonymous]
-        public async Task<int> GetAllUsersCount()
+        public async Task<int> GetUsersCount()
         {
-            _logger.LogInfo($"Count all users of database.");
-            return (await _repository.Authentication.CountAllUsersAsync());
+            _logger.LogInfo($"Count users of database.");
+            return (await _repository.Authentication.CountUsersAsync());
+        }
+
+
+        //GET api/authentications/customers/count
+        [HttpGet("customers/count")]
+        [AllowAnonymous]
+        public async Task<int> GetCustomersCount()
+        {
+            _logger.LogInfo($"Count customers of database.");
+            return (await _repository.Authentication.CountCustomersAsync());
         }
 
 
@@ -81,7 +91,7 @@ namespace GesProdAPI.Controllers
         {
             if (!ModelState.IsValid) return ValidationProblem(ModelState);
 
-            if (await GetAllUsersCount() < 1)
+            if (await GetUsersCount() < 1)
             {
                 ModelState.AddModelError("", "create a user account first");
                 return ValidationProblem(ModelState);
@@ -123,12 +133,6 @@ namespace GesProdAPI.Controllers
         {
             if (!ModelState.IsValid) return ValidationProblem(ModelState);
 
-
-            string enterprisename = "AmStrong Stéphane";
-
-            string name = enterprisename.Split(" ")[0];
-            string firstname = enterprisename.Split(" ")[1];
-
             var userRegistration = _mapper.Map<AppUser>(userRegistrationDto);
             var result = await _repository.Authentication.RegisterUserAsync(userRegistration, userRegistrationDto.Password);
 
@@ -137,13 +141,22 @@ namespace GesProdAPI.Controllers
                 var userReadDto = _mapper.Map<AuthUserReadDto>(userRegistration);
 
                 var utilisateurEntity = _mapper.Map<Utilisateur>(userReadDto);
+                
+                var clientEntity = _mapper.Map<Client>(userReadDto);
 
                 utilisateurEntity.Nom = userRegistrationDto.Name;
                 utilisateurEntity.Prenom = userRegistrationDto.Firstname;
                 utilisateurEntity.Login = userRegistrationDto.Email;
+                utilisateurEntity.ProfilsId = userRegistrationDto.ProfilsId;
+                utilisateurEntity.SitesId = userRegistrationDto.SitesId;
                 utilisateurEntity.Pwd = userRegistrationDto.Password;
 
                 await _repository.Utilisateur.CreateUtilisateurAsync(utilisateurEntity);
+
+                // customer
+                clientEntity.Tel = "null";
+
+                await _repository.Client.CreateClientAsync(clientEntity);
 
                 await _repository.SaveAsync();
 

@@ -42,7 +42,7 @@ namespace Repository
         {
             try
             {
-                File.Delete(filePath);
+                await Task.Run(()=> File.Delete(filePath));
             }
             catch (Exception)
             {

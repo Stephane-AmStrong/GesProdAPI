@@ -14,7 +14,7 @@ namespace Entities.DataTransfertObjects
 
         public Guid Id { get; set; }
         public string NomPrenom { get; set; }
-        public string Addresse { get; set; }
+        public string Adresse { get; set; }
         public string Tel { get; set; }
         public DateTime DateEnr { get; set; }
         public Guid IdUserEnr { get; set; }
