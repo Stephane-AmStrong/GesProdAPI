@@ -9,7 +9,7 @@ namespace Contracts
 {
     public interface IVenteRepository
     {
-        Task<PagedList<Vente>> GetAllVentesAsync(PaginationParameters paginationParameters);
+        Task<PagedList<Vente>> GetAllVentesAsync(VenteParameters venteParameters);
 
         Task<Vente> GetVenteByIdAsync(Guid id);
 

@@ -16,20 +16,64 @@ namespace Repository
         {
         }
 
-        public async Task<PagedList<Vente>> GetAllVentesAsync(PaginationParameters paginationParameters)
+        public async Task<PagedList<Vente>> GetAllVentesAsync(VenteParameters venteParameters)
         {
+            var ventes = Enumerable.Empty<Vente>().AsQueryable();
+
+            if(venteParameters.IdUserEnr == null && venteParameters.ClientsId == null)
+            {
+                ventes = await Task.Run(() => FindAll()
+                    .Include(x => x.Client)
+                    .Include(x => x.VentProds)
+                    .ThenInclude(x => x.Service)
+                    .ThenInclude(x => x.Category)
+                    .Include(x => x.VentProds)
+                    .ThenInclude(x => x.Disponibilite)
+                    .ThenInclude(x => x.Produit)
+                    .OrderByDescending(x => x.DateVent));
+            } 
+            else if (venteParameters.IdUserEnr != null && venteParameters.ClientsId == null)
+            {
+                ventes = await Task.Run(() => FindByCondition(x=> x.IdUserEnr == venteParameters.IdUserEnr)
+                    .Include(x => x.Client)
+                    .Include(x => x.VentProds)
+                    .ThenInclude(x => x.Service)
+                    .ThenInclude(x => x.Category)
+                    .Include(x => x.VentProds)
+                    .ThenInclude(x => x.Disponibilite)
+                    .ThenInclude(x => x.Produit)
+                    .OrderByDescending(x => x.DateVent));
+            }
+            else if (venteParameters.IdUserEnr == null && venteParameters.ClientsId != null)
+            {
+                ventes = await Task.Run(() => FindByCondition(x => x.ClientsId == venteParameters.ClientsId)
+                    .Include(x => x.Client)
+                    .Include(x => x.VentProds)
+                    .ThenInclude(x => x.Service)
+                    .ThenInclude(x => x.Category)
+                    .Include(x => x.VentProds)
+                    .ThenInclude(x => x.Disponibilite)
+                    .ThenInclude(x => x.Produit)
+                    .OrderByDescending(x => x.DateVent));
+            }
+            else if (venteParameters.IdUserEnr != null && venteParameters.ClientsId != null)
+            {
+                ventes = await Task.Run(() => FindByCondition(x => x.IdUserEnr == venteParameters.IdUserEnr && x.ClientsId == venteParameters.ClientsId)
+                    .Include(x => x.Client)
+                    .Include(x => x.VentProds)
+                    .ThenInclude(x => x.Service)
+                    .ThenInclude(x => x.Category)
+                    .Include(x => x.VentProds)
+                    .ThenInclude(x => x.Disponibilite)
+                    .ThenInclude(x => x.Produit)
+                    .OrderByDescending(x => x.DateVent));
+            }
+
+
             return await Task.Run(() =>
-                PagedList<Vente>.ToPagedList(FindAll()
-                .Include(x => x.Client)
-                .Include(x => x.VentProds)
-                .ThenInclude(x => x.Service)
-                .ThenInclude(x => x.Category)
-                .Include(x => x.VentProds)
-                .ThenInclude(x => x.Disponibilite)
-                .ThenInclude(x => x.Produit)
-                .OrderByDescending(x => x.DateVent),
-                    paginationParameters.PageNumber,
-                    paginationParameters.PageSize)
+                PagedList<Vente>.ToPagedList(ventes,
+                    venteParameters.PageNumber,
+                    venteParameters.PageSize)
                 );
         }
 

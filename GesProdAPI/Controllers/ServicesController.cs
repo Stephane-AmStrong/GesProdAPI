@@ -58,7 +58,7 @@ namespace GesProdAPI.Controllers
 
             servicesReadDto.ToList().ForEach(serviceReadDto =>
             {
-                if (serviceReadDto.Photo != null) serviceReadDto.Photo = $"{_baseURL}{serviceReadDto.Photo.Replace("~", "")}";
+                if (!string.IsNullOrWhiteSpace(serviceReadDto.Photo)) serviceReadDto.Photo = $"{_baseURL}{serviceReadDto.Photo.Replace("~", "")}";
             });
 
             return Ok(servicesReadDto);
@@ -82,7 +82,7 @@ namespace GesProdAPI.Controllers
 
                 var serviceReadDto = _mapper.Map<ServiceReadDto>(service);
 
-                if (serviceReadDto.Photo != null) serviceReadDto.Photo = $"{_baseURL}{serviceReadDto.Photo.Replace("~", "")}";
+                if (!string.IsNullOrWhiteSpace(serviceReadDto.Photo)) serviceReadDto.Photo = $"{_baseURL}{serviceReadDto.Photo.Replace("~", "")}";
 
                 return Ok(serviceReadDto);
             }
@@ -99,7 +99,7 @@ namespace GesProdAPI.Controllers
 
             servicesReadDto.ToList().ForEach(serviceReadDto =>
             {
-                if (serviceReadDto.Photo != null) serviceReadDto.Photo = $"{_baseURL}{serviceReadDto.Photo.Replace("~", "")}";
+                if (!string.IsNullOrWhiteSpace(serviceReadDto.Photo)) serviceReadDto.Photo = $"{_baseURL}{serviceReadDto.Photo.Replace("~", "")}";
             });
 
             return Ok(servicesReadDto);
@@ -208,7 +208,7 @@ namespace GesProdAPI.Controllers
 
             var serviceReadDto = _mapper.Map<ServiceReadDto>(serviceEntity);
 
-            if (serviceReadDto.Photo != null) serviceReadDto.Photo = $"{_baseURL}{serviceReadDto.Photo}";
+            if (!string.IsNullOrWhiteSpace(serviceReadDto.Photo)) serviceReadDto.Photo = $"{_baseURL}{serviceReadDto.Photo}";
 
             return Ok(serviceReadDto);
         }

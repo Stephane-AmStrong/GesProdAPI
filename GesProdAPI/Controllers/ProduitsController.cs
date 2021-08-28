@@ -58,7 +58,7 @@ namespace GesProdAPI.Controllers
 
             produitsReadDto.ToList().ForEach(produitReadDto =>
             {
-                if (produitReadDto.Photo != null) produitReadDto.Photo = $"{_baseURL}{produitReadDto.Photo.Replace("~","")}";
+                if (!string.IsNullOrWhiteSpace(produitReadDto.Photo)) produitReadDto.Photo = $"{_baseURL}{produitReadDto.Photo.Replace("~","")}";
             });
 
             return Ok(produitsReadDto);
@@ -82,7 +82,7 @@ namespace GesProdAPI.Controllers
 
                 var produitReadDto = _mapper.Map<ProduitReadDto>(produit);
 
-                if (produitReadDto.Photo != null) produitReadDto.Photo = $"{_baseURL}{produitReadDto.Photo.Replace("~", "")}";
+                if (!string.IsNullOrWhiteSpace(produitReadDto.Photo)) produitReadDto.Photo = $"{_baseURL}{produitReadDto.Photo.Replace("~", "")}";
 
                 return Ok(produitReadDto);
             }
@@ -187,7 +187,7 @@ namespace GesProdAPI.Controllers
 
             var produitReadDto = _mapper.Map<ProduitReadDto>(produitEntity);
 
-            if (produitReadDto.Photo != null) produitReadDto.Photo = $"{_baseURL}{produitReadDto.Photo}";
+            if (!string.IsNullOrWhiteSpace(produitReadDto.Photo)) produitReadDto.Photo = $"{_baseURL}{produitReadDto.Photo}";
 
             return Ok(produitReadDto);
         }

@@ -37,9 +37,10 @@ namespace GesProdAPI.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> GetAllVentes([FromQuery] PaginationParameters paginationParameters)
+        public async Task<IActionResult> GetAllVentes([FromQuery] VenteParameters venteParameters)
         {
-            var ventes = await _repository.Vente.GetAllVentesAsync(paginationParameters);
+            
+            var ventes = await _repository.Vente.GetAllVentesAsync(venteParameters);
 
             var metadata = new
             {
@@ -61,7 +62,7 @@ namespace GesProdAPI.Controllers
             {
                 venteReadDto.VentProds.ToList().ForEach( ventProd =>
                 {
-                    if (ventProd.Service.Photo != null) ventProd.Service.Photo = $"{_baseURL}{ventProd.Service.Photo.Replace("~", "")}";
+                    if (ventProd.Service != null && !string.IsNullOrWhiteSpace(ventProd.Service.Photo)) ventProd.Service.Photo = $"{_baseURL}{ventProd.Service.Photo.Replace("~", "")}";
                 });
             });
 
@@ -88,7 +89,7 @@ namespace GesProdAPI.Controllers
 
                 venteReadDto.VentProds.ToList().ForEach(ventProd =>
                 {
-                    if (ventProd.Service.Photo != null) ventProd.Service.Photo = $"{_baseURL}{ventProd.Service.Photo.Replace("~", "")}";
+                    if (!string.IsNullOrWhiteSpace(ventProd.Service.Photo)) ventProd.Service.Photo = $"{_baseURL}{ventProd.Service.Photo.Replace("~", "")}";
                 });
 
                 return Ok(venteReadDto);
