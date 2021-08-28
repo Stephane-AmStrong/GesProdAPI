@@ -10,7 +10,7 @@ namespace Entities.DataTransfertObjects
         public Guid Id { get; set; }
         public DateTime DateApp { get; set; }
         public int QteApp { get; set; }
-        public Guid DisponibilitesId { get; set; }
+        public Guid DisponibiliteId { get; set; }
         public Guid IdUserEnr { get; set; }
         public DateTime DateEnr { get; set; }
 

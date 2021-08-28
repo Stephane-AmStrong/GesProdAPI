@@ -13,7 +13,7 @@ namespace Entities.DataTransfertObjects
         public string Login { get; set; }
         public string Pwd { get; set; }
         public bool NewConnexion { get; set; }
-        public Guid ProfilsId { get; set; }
-        public Guid SitesId { get; set; }
+        public Guid ProfilId { get; set; }
+        public Guid SiteId { get; set; }
     }
 }

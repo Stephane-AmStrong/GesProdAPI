@@ -95,12 +95,12 @@ namespace GesProdAPI.Controllers
                 return BadRequest("Invalid model object");
             }
 
-            var serviceEntity = await _repository.Service.GetServiceByIdAsync(ventProd.ServicesId);
+            var serviceEntity = await _repository.Service.GetServiceByIdAsync(ventProd.ServiceId);
             
             if (serviceEntity == null)
             {
-                _logger.LogError($"Service with Id: {ventProd.ServicesId}, hasn't been found.");
-                return NotFound($"Service with Id: {ventProd.ServicesId}");
+                _logger.LogError($"Service with Id: {ventProd.ServiceId}, hasn't been found.");
+                return NotFound($"Service with Id: {ventProd.ServiceId}");
             }
 
             var ventProdEntity = _mapper.Map<VentProd>(ventProd);
@@ -108,7 +108,7 @@ namespace GesProdAPI.Controllers
             ventProdEntity.PrixVente = serviceEntity.PrixVente;
             await _repository.VentProd.CreateVentProdAsync(ventProdEntity);
 
-            var venteEntity = await _repository.Vente.GetVenteByIdAsync(ventProd.VentesId.Value);
+            var venteEntity = await _repository.Vente.GetVenteByIdAsync(ventProd.VenteId.Value);
 
             venteEntity.MontantTotal = venteEntity.VentProds.Sum(x => x.PrixVente * x.QteVendu - x.MntRemise);
             venteEntity.VentProds = null;
@@ -141,12 +141,12 @@ namespace GesProdAPI.Controllers
                     return BadRequest("Invalid model object");
                 }
 
-                var serviceEntity = await _repository.Service.GetServiceByIdAsync(ventProd.ServicesId);
+                var serviceEntity = await _repository.Service.GetServiceByIdAsync(ventProd.ServiceId);
 
                 if (serviceEntity == null)
                 {
-                    _logger.LogError($"Service with Id: {ventProd.ServicesId}, hasn't been found.");
-                    return NotFound($"Service with Id: {ventProd.ServicesId}");
+                    _logger.LogError($"Service with Id: {ventProd.ServiceId}, hasn't been found.");
+                    return NotFound($"Service with Id: {ventProd.ServiceId}");
                 }
                 else
                 {
@@ -160,7 +160,7 @@ namespace GesProdAPI.Controllers
             ventProdEntity.PrixVente = serviceEntity.PrixVente;
             await _repository.VentProd.CreateVentProdAsync(ventProdEntity);
 
-            var venteEntity = await _repository.Vente.GetVenteByIdAsync(ventProd.VentesId.Value);
+            var venteEntity = await _repository.Vente.GetVenteByIdAsync(ventProd.VenteId.Value);
 
             venteEntity.MontantTotal = venteEntity.VentProds.Sum(x => x.PrixVente * x.QteVendu - x.MntRemise);
             venteEntity.VentProds = null;
@@ -198,15 +198,15 @@ namespace GesProdAPI.Controllers
 
             _mapper.Map(ventProdWriteDto, ventProdEntity);
 
-            var oldVenteId = ventProdEntity.VentesId;
-            var newVenteId = ventProdWriteDto.VentesId;
+            var oldVenteId = ventProdEntity.VenteId;
+            var newVenteId = ventProdWriteDto.VenteId;
 
-            var newServiceEntity = await _repository.Service.GetServiceByIdAsync(ventProdWriteDto.ServicesId);
+            var newServiceEntity = await _repository.Service.GetServiceByIdAsync(ventProdWriteDto.ServiceId);
 
             if (newServiceEntity == null)
             {
-                _logger.LogError($"Service with Id: {ventProdWriteDto.ServicesId}, hasn't been found.");
-                return NotFound($"Service with Id: {ventProdWriteDto.ServicesId}");
+                _logger.LogError($"Service with Id: {ventProdWriteDto.ServiceId}, hasn't been found.");
+                return NotFound($"Service with Id: {ventProdWriteDto.ServiceId}");
             }
 
             ventProdEntity.PrixVente = newServiceEntity.PrixVente;
@@ -216,8 +216,8 @@ namespace GesProdAPI.Controllers
 
             if (newVenteEntity == null)
             {
-                _logger.LogError($"Vente with Id: {ventProdWriteDto.VentesId}, hasn't been found.");
-                return NotFound($"Vente with Id: {ventProdWriteDto.VentesId}");
+                _logger.LogError($"Vente with Id: {ventProdWriteDto.VenteId}, hasn't been found.");
+                return NotFound($"Vente with Id: {ventProdWriteDto.VenteId}");
             }
 
             newVenteEntity.MontantTotal = newVenteEntity.VentProds.Sum(x => x.PrixVente * x.QteVendu - x.MntRemise);
@@ -229,20 +229,20 @@ namespace GesProdAPI.Controllers
             if (oldVenteId != newVenteId)
             {
 
-                var oldServiceEntity = await _repository.Service.GetServiceByIdAsync(ventProdEntity.ServicesId.Value);
+                var oldServiceEntity = await _repository.Service.GetServiceByIdAsync(ventProdEntity.ServiceId.Value);
 
                 if (oldServiceEntity == null)
                 {
-                    _logger.LogError($"Service with Id: {ventProdEntity.ServicesId}, hasn't been found.");
-                    return NotFound($"Service with Id: {ventProdEntity.ServicesId}");
+                    _logger.LogError($"Service with Id: {ventProdEntity.ServiceId}, hasn't been found.");
+                    return NotFound($"Service with Id: {ventProdEntity.ServiceId}");
                 }
 
                 var oldVenteEntity = await _repository.Vente.GetVenteByIdAsync(oldVenteId);
 
                 if (oldVenteEntity == null)
                 {
-                    _logger.LogError($"Vente with Id: {ventProdWriteDto.VentesId}, hasn't been found.");
-                    return NotFound($"Vente with Id: {ventProdWriteDto.VentesId}");
+                    _logger.LogError($"Vente with Id: {ventProdWriteDto.VenteId}, hasn't been found.");
+                    return NotFound($"Vente with Id: {ventProdWriteDto.VenteId}");
                 }
 
                 oldVenteEntity = await _repository.Vente.GetVenteByIdAsync(oldVenteId);

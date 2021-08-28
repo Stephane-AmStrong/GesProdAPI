@@ -22,9 +22,9 @@ namespace Entities.DataTransfertObjects
         public string Email { get; set; }
         
         [Required]
-        public Guid ProfilsId { get; set; }
+        public Guid ProfilId { get; set; }
         [Required]
-        public Guid SitesId { get; set; }
+        public Guid SiteId { get; set; }
 
         [Required]
         [DataType(DataType.Password)]

@@ -10,11 +10,11 @@ namespace Entities.Models
         public Guid Id { get; set; }
         public string Localisation { get; set; }
         public int QteVendu { get; set; }
-        public int PrixVente { get; set; }
-        public int MntRemise { get; set; }
-        public Guid VentesId { get; set; }
-        public Guid? DisponibilitesId { get; set; }
-        public Guid? ServicesId { get; set; }
+        public int? PrixVente { get; set; }
+        public int? MntRemise { get; set; }
+        public Guid VenteId { get; set; }
+        public Guid? DisponibiliteId { get; set; }
+        public Guid? ServiceId { get; set; }
         public string TauxImposition { get; set; }
 
         public virtual Disponibilite Disponibilite { get; set; }

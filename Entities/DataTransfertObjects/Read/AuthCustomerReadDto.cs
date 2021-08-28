@@ -15,7 +15,7 @@ namespace Entities.DataTransfertObjects
         public string PhoneNumber { get; set; }
         public string IFU { get; set; }
         public string Address { get; set; }
-        public DateTime? Birthday { get; set; }
+
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
         public DateTime? DisabledAt { get; set; }

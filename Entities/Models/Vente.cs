@@ -25,7 +25,7 @@ namespace Entities.Models
         public int? MontantTotal { get; set; }
         public string NimMecef { get; set; }
         public string CodeMecef { get; set; }
-        public Guid ClientsId { get; set; }
+        public Guid ClientId { get; set; }
         public Guid IdUserEnr { get; set; }
         public string DateMecef { get; set; }
         public string QrcodeMecef { get; set; }
@@ -41,6 +41,7 @@ namespace Entities.Models
         public string CompteurTypeFactureMecefAvoir { get; set; }
         public string DateMecefAvoir { get; set; }
         public bool Api { get; set; }
+        public string LibRemise { get; set; }
 
         public virtual Client Client { get; set; }
         public virtual NumeroCompte NumeroCompte { get; set; }

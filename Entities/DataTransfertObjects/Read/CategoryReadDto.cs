@@ -9,14 +9,14 @@ namespace Entities.DataTransfertObjects
     {
         public CategoryReadDto()
         {
-            //Produits = new HashSet<ProduitReadDto>();
+            //Produit = new HashSet<ProduitReadDto>();
             Services = new HashSet<ServiceReadDto>();
         }
 
         public Guid Id { get; set; }
         public string Libelle { get; set; }
 
-        //public virtual ICollection<ProduitReadDto> Produits { get; set; }
+        //public virtual ICollection<ProduitReadDto> Produit { get; set; }
         public virtual ICollection<ServiceReadDto> Services { get; set; }
     }
 }

@@ -46,7 +46,7 @@ namespace Repository
             }
             else if (venteParameters.IdUserEnr == null && venteParameters.ClientId != null)
             {
-                ventes = await Task.Run(() => FindByCondition(x => x.ClientsId == venteParameters.ClientId)
+                ventes = await Task.Run(() => FindByCondition(x => x.ClientId == venteParameters.ClientId)
                     .Include(x => x.Client)
                     .Include(x => x.VentProds)
                     .ThenInclude(x => x.Service)
@@ -58,7 +58,7 @@ namespace Repository
             }
             else if (venteParameters.IdUserEnr != null && venteParameters.ClientId != null)
             {
-                ventes = await Task.Run(() => FindByCondition(x => x.IdUserEnr == venteParameters.IdUserEnr && x.ClientsId == venteParameters.ClientId)
+                ventes = await Task.Run(() => FindByCondition(x => x.IdUserEnr == venteParameters.IdUserEnr && x.ClientId == venteParameters.ClientId)
                     .Include(x => x.Client)
                     .Include(x => x.VentProds)
                     .ThenInclude(x => x.Service)

@@ -25,7 +25,7 @@ namespace Entities.DataTransfertObjects
         public string TauxImposition { get; set; }
         public string LibelleTaxeSpecifique { get; set; }
         public int? MntTaxeSpecifique { get; set; }
-        public Guid CategoriesId { get; set; }
+        public Guid CategoryId { get; set; }
 
         public virtual CategoryReadDto Category { get; set; }
         public virtual ICollection<ApproProduitReadDto> ApproProduits { get; set; }

@@ -19,6 +19,8 @@ namespace Entities.Models
         public string NomEntreprise { get; set; }
         public string Ifu { get; set; }
         public string Adresse { get; set; }
+        public string Email { get; set; }
+        public string Pwd { get; set; }
 
         public virtual ICollection<Vente> Ventes { get; set; }
     }

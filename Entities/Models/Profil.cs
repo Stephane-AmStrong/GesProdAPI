@@ -33,6 +33,7 @@ namespace Entities.Models
         public bool SituationJournaliere { get; set; }
         public bool ModifierFacture { get; set; }
         public bool Historique { get; set; }
+        public bool BonCadeau { get; set; }
 
         public virtual ICollection<Utilisateur> Utilisateurs { get; set; }
     }

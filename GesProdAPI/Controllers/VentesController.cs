@@ -379,7 +379,7 @@ namespace GesProdAPI.Controllers
                 return BadRequest("Invalid model object");
             }
 
-            if (vente.ClientsId == null) vente.ClientsId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            if (vente.ClientId == null) vente.ClientId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
             var venteEntity = _mapper.Map<Vente>(vente);
 
@@ -396,8 +396,8 @@ namespace GesProdAPI.Controllers
             venteEntity.VentProds.ToList().ForEach(vendProd =>
             {
                 vendProd.Id = Guid.NewGuid();
-                vendProd.PrixVente = services.First(x=>x.Id == vendProd.ServicesId.Value).PrixVente;
-                vendProd.TauxImposition = services.First(x=>x.Id == vendProd.ServicesId.Value).TauxImposition;
+                vendProd.PrixVente = services.First(x=>x.Id == vendProd.ServiceId.Value).PrixVente;
+                vendProd.TauxImposition = services.First(x=>x.Id == vendProd.ServiceId.Value).TauxImposition;
             });
 
             venteEntity.MontantTotal = venteEntity.VentProds.Sum(x => x.PrixVente * x.QteVendu - x.MntRemise);
@@ -440,16 +440,16 @@ namespace GesProdAPI.Controllers
             venteEntity.DateEnr = DateTime.Now;
             //venteEntity.TypeFacture = "FV";
             //venteEntity.ModePaiement = "A";
-            //venteEntity.ClientsId = venteUpdateDto.ClientsId;
+            //venteEntity.ClientId = venteUpdateDto.ClientId;
             venteEntity.IdUserEnr = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
 
             venteEntity.VentProds.ToList().ForEach(vendProd =>
             {
                 if(vendProd.Id == Guid.Empty) vendProd.Id = Guid.NewGuid();
-                vendProd.PrixVente = services.First(x => x.Id == vendProd.ServicesId.Value).PrixVente;
-                vendProd.TauxImposition = services.First(x => x.Id == vendProd.ServicesId.Value).TauxImposition;
-                vendProd.VentesId = venteEntity.Id;
+                vendProd.PrixVente = services.First(x => x.Id == vendProd.ServiceId.Value).PrixVente;
+                vendProd.TauxImposition = services.First(x => x.Id == vendProd.ServiceId.Value).TauxImposition;
+                vendProd.VenteId = venteEntity.Id;
             });
 
 

@@ -11,10 +11,10 @@ namespace Entities.DataTransfertObjects
         public Guid Id { get; set; }
         public string CodeUser { get; set; }
         public string Name { get; set; }
-        public Guid? ProfilsId { get; set; }
-        public Guid? SitesId { get; set; }
+        public Guid? ProfilId { get; set; }
+        public Guid? SiteId { get; set; }
 
-        public DateTime? Birthday { get; set; }
+
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
         public DateTime? DisabledAt { get; set; }

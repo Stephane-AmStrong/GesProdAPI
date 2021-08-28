@@ -25,7 +25,7 @@ namespace Entities.DataTransfertObjects
         public int? MontantTotal { get; set; }
         public string NimMecef { get; set; }
         public string CodeMecef { get; set; }
-        public Guid ClientsId { get; set; }
+        public Guid ClientId { get; set; }
         public Guid IdUserEnr { get; set; }
         public string DateMecef { get; set; }
         public string QrcodeMecef { get; set; }
