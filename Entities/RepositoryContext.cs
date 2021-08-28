@@ -52,15 +52,17 @@ namespace Entities
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
 
             modelBuilder.Entity<ApproProduit>(entity =>
             {
                 entity.ToTable("Appro_Produit");
 
-                entity.HasIndex(e => e.ApprovisionnementId, "IX_FK_ApprovisionnementsAppro_Produit");
+                entity.HasIndex(e => e.ApprovisionnementsId, "IX_FK_ApprovisionnementsAppro_Produit");
 
-                entity.HasIndex(e => e.ProduitId, "IX_FK_ProduitsAppro_Produit");
+                entity.HasIndex(e => e.ProduitsId, "IX_FK_ProduitsAppro_Produit");
 
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
@@ -72,15 +74,15 @@ namespace Entities
 
                 entity.Property(e => e.QteApp).HasColumnName("Qte_app");
 
-                entity.HasOne(d => d.Approvisionnement)
+                entity.HasOne(d => d.Approvisionnements)
                     .WithMany(p => p.ApproProduits)
-                    .HasForeignKey(d => d.ApprovisionnementId)
+                    .HasForeignKey(d => d.ApprovisionnementsId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ApprovisionnementsAppro_Produit");
 
-                entity.HasOne(d => d.Produit)
+                entity.HasOne(d => d.Produits)
                     .WithMany(p => p.ApproProduits)
-                    .HasForeignKey(d => d.ProduitId)
+                    .HasForeignKey(d => d.ProduitsId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ProduitsAppro_Produit");
             });
@@ -89,7 +91,7 @@ namespace Entities
             {
                 entity.ToTable("Appro_Site");
 
-                entity.HasIndex(e => e.DisponibiliteId, "IX_FK_DisponibilitesAppro_Site");
+                entity.HasIndex(e => e.DisponibilitesId, "IX_FK_DisponibilitesAppro_Site");
 
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
@@ -107,14 +109,14 @@ namespace Entities
 
                 entity.HasOne(d => d.Disponibilites)
                     .WithMany(p => p.ApproSites)
-                    .HasForeignKey(d => d.DisponibiliteId)
+                    .HasForeignKey(d => d.DisponibilitesId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_DisponibilitesAppro_Site");
             });
 
             modelBuilder.Entity<Approvisionnement>(entity =>
             {
-                entity.HasIndex(e => e.FournisseurId, "IX_FK_FournisseursApprovisionnements");
+                entity.HasIndex(e => e.FournisseursId, "IX_FK_FournisseursApprovisionnements");
 
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
@@ -130,9 +132,9 @@ namespace Entities
 
                 entity.Property(e => e.Numero).IsRequired();
 
-                entity.HasOne(d => d.Fournisseur)
+                entity.HasOne(d => d.Fournisseurs)
                     .WithMany(p => p.Approvisionnements)
-                    .HasForeignKey(d => d.FournisseurId)
+                    .HasForeignKey(d => d.FournisseursId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_FournisseursApprovisionnements");
             });
@@ -142,7 +144,7 @@ namespace Entities
             {
                 entity.ToTable("Autre_sortie");
 
-                entity.HasIndex(e => e.ProduitId, "IX_FK_ProduitsEtat_produit");
+                entity.HasIndex(e => e.ProduitsId, "IX_FK_ProduitsEtat_produit");
 
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
@@ -156,9 +158,9 @@ namespace Entities
 
                 entity.Property(e => e.Motif).IsRequired();
 
-                entity.HasOne(d => d.Produit)
+                entity.HasOne(d => d.Produits)
                     .WithMany(p => p.AutreSorties)
-                    .HasForeignKey(d => d.ProduitId)
+                    .HasForeignKey(d => d.ProduitsId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ProduitsEtat_produit");
             });
@@ -206,9 +208,9 @@ namespace Entities
 
             modelBuilder.Entity<Disponibilite>(entity =>
             {
-                entity.HasIndex(e => e.ProduitId, "IX_FK_ProduitsDisponibilites");
+                entity.HasIndex(e => e.ProduitsId, "IX_FK_ProduitsDisponibilites");
 
-                entity.HasIndex(e => e.SiteId, "IX_FK_SitesDisponibilites");
+                entity.HasIndex(e => e.SitesId, "IX_FK_SitesDisponibilites");
 
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
@@ -222,15 +224,15 @@ namespace Entities
 
                 entity.Property(e => e.SeuilAlerte).HasColumnName("Seuil_alerte");
 
-                entity.HasOne(d => d.Produit)
+                entity.HasOne(d => d.Produits)
                     .WithMany(p => p.Disponibilites)
-                    .HasForeignKey(d => d.ProduitId)
+                    .HasForeignKey(d => d.ProduitsId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ProduitsDisponibilites");
 
-                entity.HasOne(d => d.Site)
+                entity.HasOne(d => d.Sites)
                     .WithMany(p => p.Disponibilites)
-                    .HasForeignKey(d => d.SiteId)
+                    .HasForeignKey(d => d.SitesId)
                     .HasConstraintName("FK_SitesDisponibilites");
             });
 
@@ -290,7 +292,7 @@ namespace Entities
 
             modelBuilder.Entity<Produit>(entity =>
             {
-                entity.HasIndex(e => e.CategoryId, "IX_FK_CategoriesProduits");
+                entity.HasIndex(e => e.CategoriesId, "IX_FK_CategoriesProduits");
 
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
@@ -312,9 +314,9 @@ namespace Entities
                     .IsRequired()
                     .HasColumnName("Taux_Imposition");
 
-                entity.HasOne(d => d.Category)
+                entity.HasOne(d => d.Categories)
                     .WithMany(p => p.Produits)
-                    .HasForeignKey(d => d.CategoryId)
+                    .HasForeignKey(d => d.CategoriesId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_CategoriesProduits");
             });
@@ -354,7 +356,7 @@ namespace Entities
 
             modelBuilder.Entity<Service>(entity =>
             {
-                entity.HasIndex(e => e.CategoryId, "IX_FK_Services_Categories");
+                entity.HasIndex(e => e.CategoriesId, "IX_FK_Services_Categories");
 
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
@@ -374,9 +376,9 @@ namespace Entities
 
                 entity.Property(e => e.VentProdId).HasColumnName("Vent_Prod_Id");
 
-                entity.HasOne(d => d.Category)
+                entity.HasOne(d => d.Categories)
                     .WithMany(p => p.Services)
-                    .HasForeignKey(d => d.CategoryId)
+                    .HasForeignKey(d => d.CategoriesId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Services_Categories");
             });
@@ -394,9 +396,9 @@ namespace Entities
 
             modelBuilder.Entity<Utilisateur>(entity =>
             {
-                entity.HasIndex(e => e.ProfilId, "IX_FK_ProfilsUtilisateurs");
+                entity.HasIndex(e => e.ProfilsId, "IX_FK_ProfilsUtilisateurs");
 
-                entity.HasIndex(e => e.SiteId, "IX_FK_SitesUtilisateurs");
+                entity.HasIndex(e => e.SitesId, "IX_FK_SitesUtilisateurs");
 
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
@@ -412,15 +414,15 @@ namespace Entities
 
                 entity.Property(e => e.Pwd).IsRequired();
 
-                entity.HasOne(d => d.Profil)
+                entity.HasOne(d => d.Profils)
                     .WithMany(p => p.Utilisateurs)
-                    .HasForeignKey(d => d.ProfilId)
+                    .HasForeignKey(d => d.ProfilsId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ProfilsUtilisateurs");
 
-                entity.HasOne(d => d.Site)
+                entity.HasOne(d => d.Sites)
                     .WithMany(p => p.Utilisateurs)
-                    .HasForeignKey(d => d.SiteId)
+                    .HasForeignKey(d => d.SitesId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_SitesUtilisateurs");
             });
@@ -429,11 +431,11 @@ namespace Entities
             {
                 entity.ToTable("Vent_Prod");
 
-                entity.HasIndex(e => e.DisponibiliteId, "IX_FK_DisponibilitesVent_Prod");
+                entity.HasIndex(e => e.DisponibilitesId, "IX_FK_DisponibilitesVent_Prod");
 
-                entity.HasIndex(e => e.ServiceId, "IX_FK_Vent_Prod_Vent_Prod");
+                entity.HasIndex(e => e.ServicesId, "IX_FK_Vent_Prod_Vent_Prod");
 
-                entity.HasIndex(e => e.VenteId, "IX_FK_VentesVent_Prod");
+                entity.HasIndex(e => e.VentesId, "IX_FK_VentesVent_Prod");
 
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
@@ -445,26 +447,26 @@ namespace Entities
 
                 entity.Property(e => e.TauxImposition).HasColumnName("Taux_Imposition");
 
-                entity.HasOne(d => d.Disponibilite)
+                entity.HasOne(d => d.Disponibilites)
                     .WithMany(p => p.VentProds)
-                    .HasForeignKey(d => d.DisponibiliteId)
+                    .HasForeignKey(d => d.DisponibilitesId)
                     .HasConstraintName("FK_DisponibilitesVent_Prod");
 
-                entity.HasOne(d => d.Service)
+                entity.HasOne(d => d.Services)
                     .WithMany(p => p.VentProds)
-                    .HasForeignKey(d => d.ServiceId)
+                    .HasForeignKey(d => d.ServicesId)
                     .HasConstraintName("FK_Vent_Prod_Vent_Prod");
 
-                entity.HasOne(d => d.Vente)
+                entity.HasOne(d => d.Ventes)
                     .WithMany(p => p.VentProds)
-                    .HasForeignKey(d => d.VenteId)
+                    .HasForeignKey(d => d.VentesId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_VentesVent_Prod");
             });
 
             modelBuilder.Entity<Vente>(entity =>
             {
-                entity.HasIndex(e => e.ClientId, "IX_FK_ClientsVentes");
+                entity.HasIndex(e => e.ClientsId, "IX_FK_ClientsVentes");
 
                 entity.HasIndex(e => e.NumeroCompteId, "IX_FK_NumeroCompteVentes");
 
@@ -534,9 +536,9 @@ namespace Entities
                     .IsRequired()
                     .HasColumnName("Type_Facture");
 
-                entity.HasOne(d => d.Client)
+                entity.HasOne(d => d.Clients)
                     .WithMany(p => p.Ventes)
-                    .HasForeignKey(d => d.ClientId)
+                    .HasForeignKey(d => d.ClientsId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ClientsVentes");
 

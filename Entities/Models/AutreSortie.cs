@@ -14,8 +14,8 @@ namespace Entities.Models
         public int Quantite { get; set; }
         public DateTime DateEnr { get; set; }
         public Guid IdUserEnr { get; set; }
-        public Guid ProduitId { get; set; }
+        public Guid ProduitsId { get; set; }
 
-        public virtual Produit Produit { get; set; }
+        public virtual Produit Produits { get; set; }
     }
 }

@@ -19,11 +19,11 @@ namespace Entities.Models
         public int SeuilAlerte { get; set; }
         public DateTime DateEnr { get; set; }
         public Guid IdUserEnr { get; set; }
-        public Guid? SiteId { get; set; }
-        public Guid ProduitId { get; set; }
+        public Guid? SitesId { get; set; }
+        public Guid ProduitsId { get; set; }
 
-        public virtual Produit Produit { get; set; }
-        public virtual Site Site { get; set; }
+        public virtual Produit Produits { get; set; }
+        public virtual Site Sites { get; set; }
         public virtual ICollection<ApproSite> ApproSites { get; set; }
         public virtual ICollection<VentProd> VentProds { get; set; }
     }

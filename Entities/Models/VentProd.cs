@@ -12,13 +12,13 @@ namespace Entities.Models
         public int QteVendu { get; set; }
         public int? PrixVente { get; set; }
         public int? MntRemise { get; set; }
-        public Guid VenteId { get; set; }
-        public Guid? DisponibiliteId { get; set; }
-        public Guid? ServiceId { get; set; }
+        public Guid VentesId { get; set; }
+        public Guid? DisponibilitesId { get; set; }
+        public Guid? ServicesId { get; set; }
         public string TauxImposition { get; set; }
 
-        public virtual Disponibilite Disponibilite { get; set; }
-        public virtual Service Service { get; set; }
-        public virtual Vente Vente { get; set; }
+        public virtual Disponibilite Disponibilites { get; set; }
+        public virtual Service Services { get; set; }
+        public virtual Vente Ventes { get; set; }
     }
 }

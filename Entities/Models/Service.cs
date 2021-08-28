@@ -22,9 +22,9 @@ namespace Entities.Models
         public int? MntTaxeSpecifique { get; set; }
         public string LibelleTaxeSpecifique { get; set; }
         public Guid? VentProdId { get; set; }
-        public Guid CategoryId { get; set; }
+        public Guid CategoriesId { get; set; }
 
-        public virtual Category Category { get; set; }
+        public virtual Category Categories { get; set; }
         public virtual ICollection<VentProd> VentProds { get; set; }
     }
 }
