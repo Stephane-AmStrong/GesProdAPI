@@ -68,6 +68,90 @@ namespace GesProdAPI.Controllers
 
             return Ok(ventesReadDto);
         }
+        
+
+
+        [HttpGet("clients")]
+        public async Task<IActionResult> GetLoggIngCustomerVentes([FromQuery] PaginationParameters paginationParameters)
+        {
+            var venteParameters = new VenteParameters
+            {
+                PageNumber = paginationParameters.PageNumber,
+                PageSize = paginationParameters.PageSize,
+                IdUserEnr = null,
+                ClientId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value),
+            };
+
+            var ventes = await _repository.Vente.GetAllVentesAsync(venteParameters);
+
+            var metadata = new
+            {
+                ventes.TotalCount,
+                ventes.PageSize,
+                ventes.CurrentPage,
+                ventes.TotalPages,
+                ventes.HasNext,
+                ventes.HasPrevious
+            };
+
+            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
+
+            _logger.LogInfo($"Returned all ventesDisponible ventesDisponible from database.");
+
+            var ventesReadDto = _mapper.Map<IEnumerable<VenteReadDto>>(ventes);
+
+            ventesReadDto.ToList().ForEach(venteReadDto =>
+            {
+                venteReadDto.VentProds.ToList().ForEach( ventProd =>
+                {
+                    if (ventProd.Service != null && !string.IsNullOrWhiteSpace(ventProd.Service.Photo)) ventProd.Service.Photo = $"{_baseURL}{ventProd.Service.Photo.Replace("~", "")}";
+                });
+            });
+
+            return Ok(ventesReadDto);
+        }
+        
+
+
+        [HttpGet("utilisateurs")]
+        public async Task<IActionResult> GetUserVentes([FromQuery] PaginationParameters paginationParameters)
+        {
+            var venteParameters = new VenteParameters
+            {
+                PageNumber = paginationParameters.PageNumber,
+                PageSize = paginationParameters.PageSize,
+                ClientId = null,
+                IdUserEnr = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value),
+            };
+
+            var ventes = await _repository.Vente.GetAllVentesAsync(venteParameters);
+
+            var metadata = new
+            {
+                ventes.TotalCount,
+                ventes.PageSize,
+                ventes.CurrentPage,
+                ventes.TotalPages,
+                ventes.HasNext,
+                ventes.HasPrevious
+            };
+
+            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
+
+            _logger.LogInfo($"Returned all ventesDisponible ventesDisponible from database.");
+
+            var ventesReadDto = _mapper.Map<IEnumerable<VenteReadDto>>(ventes);
+
+            ventesReadDto.ToList().ForEach(venteReadDto =>
+            {
+                venteReadDto.VentProds.ToList().ForEach( ventProd =>
+                {
+                    if (ventProd.Service != null && !string.IsNullOrWhiteSpace(ventProd.Service.Photo)) ventProd.Service.Photo = $"{_baseURL}{ventProd.Service.Photo.Replace("~", "")}";
+                });
+            });
+
+            return Ok(ventesReadDto);
+        }
 
 
 

@@ -142,8 +142,6 @@ namespace GesProdAPI.Controllers
 
                 var utilisateurEntity = _mapper.Map<Utilisateur>(userReadDto);
                 
-                var clientEntity = _mapper.Map<Client>(userReadDto);
-
                 utilisateurEntity.Nom = userRegistrationDto.Name;
                 utilisateurEntity.Prenom = userRegistrationDto.Firstname;
                 utilisateurEntity.Login = userRegistrationDto.Email;
@@ -154,6 +152,8 @@ namespace GesProdAPI.Controllers
                 await _repository.Utilisateur.CreateUtilisateurAsync(utilisateurEntity);
 
                 // customer
+                var clientEntity = _mapper.Map<Client>(userReadDto);
+
                 clientEntity.Tel = "null";
 
                 await _repository.Client.CreateClientAsync(clientEntity);

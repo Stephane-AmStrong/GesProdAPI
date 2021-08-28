@@ -27,6 +27,7 @@ namespace Contracts
 
         public enum Target
         {
+            Both,
             TheDeclaredOnes,
             TheNonDeclaredOnes
         }
