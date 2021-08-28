@@ -14,7 +14,7 @@ namespace Entities.Models
         public Guid IdUserEnr { get; set; }
         public Guid ProduitsId { get; set; }
 
-        public virtual Approvisionnement Approvisionnements { get; set; }
-        public virtual Produit Produits { get; set; }
+        public virtual Approvisionnement Approvisionnement { get; set; }
+        public virtual Produit Produit { get; set; }
     }
 }

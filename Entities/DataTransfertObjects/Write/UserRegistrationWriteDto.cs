@@ -20,15 +20,11 @@ namespace Entities.DataTransfertObjects
         [Required]
         [EmailField]
         public string Email { get; set; }
-        
-        [Required]
-        public Guid ProfilId { get; set; }
-        [Required]
-        public Guid SiteId { get; set; }
-
         [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; }
+        public Guid ProfilsId { get; set; }
+        public Guid SitesId { get; set; }
 
         [Required]
         [DataType(DataType.Password)]

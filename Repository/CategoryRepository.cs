@@ -28,7 +28,7 @@ namespace Repository
         public async Task<Category> GetCategoryByIdAsync(Guid id)
         {
             return await FindByCondition(category => category.Id.Equals(id))
-                
+                .Include(x => x.Produits)
                 .OrderBy(x => x.Libelle)
                 .FirstOrDefaultAsync();
         }

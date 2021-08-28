@@ -3,6 +3,7 @@ D:\Visual Studio 2019\source\Personnel\GesProdAPI\GesProdAPI\obj\Debug\net5.0\Ge
 D:\Visual Studio 2019\source\Personnel\GesProdAPI\GesProdAPI\obj\Debug\net5.0\GesProdAPI.AssemblyInfoInputs.cache
 D:\Visual Studio 2019\source\Personnel\GesProdAPI\GesProdAPI\obj\Debug\net5.0\GesProdAPI.AssemblyInfo.cs
 D:\Visual Studio 2019\source\Personnel\GesProdAPI\GesProdAPI\obj\Debug\net5.0\GesProdAPI.csproj.CoreCompileInputs.cache
+D:\Visual Studio 2019\source\Personnel\GesProdAPI\GesProdAPI\obj\Debug\net5.0\GesProdAPI.MvcApplicationPartsAssemblyInfo.cs
 D:\Visual Studio 2019\source\Personnel\GesProdAPI\GesProdAPI\obj\Debug\net5.0\GesProdAPI.MvcApplicationPartsAssemblyInfo.cache
 D:\Visual Studio 2019\source\Personnel\GesProdAPI\GesProdAPI\bin\Debug\net5.0\appsettings.Development.json
 D:\Visual Studio 2019\source\Personnel\GesProdAPI\GesProdAPI\bin\Debug\net5.0\appsettings.json
@@ -74,7 +75,6 @@ D:\Visual Studio 2019\source\Personnel\GesProdAPI\GesProdAPI\bin\Debug\net5.0\En
 D:\Visual Studio 2019\source\Personnel\GesProdAPI\GesProdAPI\bin\Debug\net5.0\LoggerServices.pdb
 D:\Visual Studio 2019\source\Personnel\GesProdAPI\GesProdAPI\bin\Debug\net5.0\Repository.pdb
 D:\Visual Studio 2019\source\Personnel\GesProdAPI\GesProdAPI\bin\Debug\net5.0\Contracts.pdb
-D:\Visual Studio 2019\source\Personnel\GesProdAPI\GesProdAPI\obj\Debug\net5.0\GesProdAPI.MvcApplicationPartsAssemblyInfo.cs
 D:\Visual Studio 2019\source\Personnel\GesProdAPI\GesProdAPI\obj\Debug\net5.0\staticwebassets\GesProdAPI.StaticWebAssets.Manifest.cache
 D:\Visual Studio 2019\source\Personnel\GesProdAPI\GesProdAPI\obj\Debug\net5.0\staticwebassets\GesProdAPI.StaticWebAssets.xml
 D:\Visual Studio 2019\source\Personnel\GesProdAPI\GesProdAPI\obj\Debug\net5.0\scopedcss\bundle\GesProdAPI.styles.css

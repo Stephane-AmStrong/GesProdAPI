@@ -12,7 +12,7 @@ namespace Entities.DataTransfertObjects
         public int SeuilAlerte { get; set; }
         public DateTime DateEnr { get; set; }
         public Guid IdUserEnr { get; set; }
-        public Guid? SiteId { get; set; }
-        public Guid ProduitId { get; set; }
+        public Guid? SitesId { get; set; }
+        public Guid ProduitsId { get; set; }
     }
 }

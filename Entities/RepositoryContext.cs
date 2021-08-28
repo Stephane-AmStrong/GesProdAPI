@@ -74,13 +74,13 @@ namespace Entities
 
                 entity.Property(e => e.QteApp).HasColumnName("Qte_app");
 
-                entity.HasOne(d => d.Approvisionnements)
+                entity.HasOne(d => d.Approvisionnement)
                     .WithMany(p => p.ApproProduits)
                     .HasForeignKey(d => d.ApprovisionnementsId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ApprovisionnementsAppro_Produit");
 
-                entity.HasOne(d => d.Produits)
+                entity.HasOne(d => d.Produit)
                     .WithMany(p => p.ApproProduits)
                     .HasForeignKey(d => d.ProduitsId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
@@ -107,7 +107,7 @@ namespace Entities
 
                 entity.Property(e => e.QteApp).HasColumnName("Qte_App");
 
-                entity.HasOne(d => d.Disponibilites)
+                entity.HasOne(d => d.Disponibilite)
                     .WithMany(p => p.ApproSites)
                     .HasForeignKey(d => d.DisponibilitesId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
@@ -132,7 +132,7 @@ namespace Entities
 
                 entity.Property(e => e.Numero).IsRequired();
 
-                entity.HasOne(d => d.Fournisseurs)
+                entity.HasOne(d => d.Fournisseur)
                     .WithMany(p => p.Approvisionnements)
                     .HasForeignKey(d => d.FournisseursId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
@@ -158,7 +158,7 @@ namespace Entities
 
                 entity.Property(e => e.Motif).IsRequired();
 
-                entity.HasOne(d => d.Produits)
+                entity.HasOne(d => d.Produit)
                     .WithMany(p => p.AutreSorties)
                     .HasForeignKey(d => d.ProduitsId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
@@ -224,13 +224,13 @@ namespace Entities
 
                 entity.Property(e => e.SeuilAlerte).HasColumnName("Seuil_alerte");
 
-                entity.HasOne(d => d.Produits)
+                entity.HasOne(d => d.Produit)
                     .WithMany(p => p.Disponibilites)
                     .HasForeignKey(d => d.ProduitsId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ProduitsDisponibilites");
 
-                entity.HasOne(d => d.Sites)
+                entity.HasOne(d => d.Site)
                     .WithMany(p => p.Disponibilites)
                     .HasForeignKey(d => d.SitesId)
                     .HasConstraintName("FK_SitesDisponibilites");
@@ -314,7 +314,7 @@ namespace Entities
                     .IsRequired()
                     .HasColumnName("Taux_Imposition");
 
-                entity.HasOne(d => d.Categories)
+                entity.HasOne(d => d.Category)
                     .WithMany(p => p.Produits)
                     .HasForeignKey(d => d.CategoriesId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
@@ -376,7 +376,7 @@ namespace Entities
 
                 entity.Property(e => e.VentProdId).HasColumnName("Vent_Prod_Id");
 
-                entity.HasOne(d => d.Categories)
+                entity.HasOne(d => d.Category)
                     .WithMany(p => p.Services)
                     .HasForeignKey(d => d.CategoriesId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
@@ -414,13 +414,13 @@ namespace Entities
 
                 entity.Property(e => e.Pwd).IsRequired();
 
-                entity.HasOne(d => d.Profils)
+                entity.HasOne(d => d.Profil)
                     .WithMany(p => p.Utilisateurs)
                     .HasForeignKey(d => d.ProfilsId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ProfilsUtilisateurs");
 
-                entity.HasOne(d => d.Sites)
+                entity.HasOne(d => d.Site)
                     .WithMany(p => p.Utilisateurs)
                     .HasForeignKey(d => d.SitesId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
@@ -447,17 +447,17 @@ namespace Entities
 
                 entity.Property(e => e.TauxImposition).HasColumnName("Taux_Imposition");
 
-                entity.HasOne(d => d.Disponibilites)
+                entity.HasOne(d => d.Disponibilite)
                     .WithMany(p => p.VentProds)
                     .HasForeignKey(d => d.DisponibilitesId)
                     .HasConstraintName("FK_DisponibilitesVent_Prod");
 
-                entity.HasOne(d => d.Services)
+                entity.HasOne(d => d.Service)
                     .WithMany(p => p.VentProds)
                     .HasForeignKey(d => d.ServicesId)
                     .HasConstraintName("FK_Vent_Prod_Vent_Prod");
 
-                entity.HasOne(d => d.Ventes)
+                entity.HasOne(d => d.Vente)
                     .WithMany(p => p.VentProds)
                     .HasForeignKey(d => d.VentesId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
@@ -536,7 +536,7 @@ namespace Entities
                     .IsRequired()
                     .HasColumnName("Type_Facture");
 
-                entity.HasOne(d => d.Clients)
+                entity.HasOne(d => d.Client)
                     .WithMany(p => p.Ventes)
                     .HasForeignKey(d => d.ClientsId)
                     .OnDelete(DeleteBehavior.ClientSetNull)

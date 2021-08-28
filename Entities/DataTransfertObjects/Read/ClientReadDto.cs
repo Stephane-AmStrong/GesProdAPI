@@ -18,7 +18,7 @@ namespace Entities.DataTransfertObjects
         public string Tel { get; set; }
         public string NomEntreprise { get; set; }
         public string Ifu { get; set; }
-        public string Adresse { get; set; }
+        public string Addresse { get; set; }
 
         public virtual ICollection<VenteReadDto> Ventes { get; set; }
     }

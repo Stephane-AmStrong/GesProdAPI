@@ -14,6 +14,6 @@ namespace Entities.Models
         public Guid IdUserEnr { get; set; }
         public DateTime DateEnr { get; set; }
 
-        public virtual Disponibilite Disponibilites { get; set; }
+        public virtual Disponibilite Disponibilite { get; set; }
     }
 }

@@ -18,6 +18,6 @@ namespace Entities.DataTransfertObjects
         public string TauxImposition { get; set; }
         public string LibelleTaxeSpecifique { get; set; }
         public int MntTaxeSpecifique { get; set; }
-        public Guid CategoryId { get; set; }
+        public Guid CategoriesId { get; set; }
     }
 }

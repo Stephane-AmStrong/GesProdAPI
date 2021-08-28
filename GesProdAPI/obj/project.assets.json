@@ -1709,10 +1709,7 @@
         },
         "runtime": {
           "bin/placeholder/Contracts.dll": {}
-        },
-        "frameworkReferences": [
-          "Microsoft.AspNetCore.App"
-        ]
+        }
       },
       "Entities/1.0.0": {
         "type": "project",
@@ -1729,10 +1726,7 @@
         },
         "runtime": {
           "bin/placeholder/Entities.dll": {}
-        },
-        "frameworkReferences": [
-          "Microsoft.AspNetCore.App"
-        ]
+        }
       },
       "LoggerServices/1.0.0": {
         "type": "project",
@@ -1746,10 +1740,7 @@
         },
         "runtime": {
           "bin/placeholder/LoggerServices.dll": {}
-        },
-        "frameworkReferences": [
-          "Microsoft.AspNetCore.App"
-        ]
+        }
       },
       "Repository/1.0.0": {
         "type": "project",
@@ -1764,10 +1755,7 @@
         },
         "runtime": {
           "bin/placeholder/Repository.dll": {}
-        },
-        "frameworkReferences": [
-          "Microsoft.AspNetCore.App"
-        ]
+        }
       }
     }
   },
@@ -6323,7 +6311,7 @@
       "code": "NU1701",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Package 'Microsoft.AspNet.WebPages.Data 2.0.20710' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework 'net5.0'. This package may not be fully compatible with your project.",
+      "message": "Le package 'Microsoft.AspNet.WebPages.Data 2.0.20710' a été restauré en utilisant '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' au lieu du framework cible du projet 'net5.0'. Ce package n'est peut-être pas totalement compatible avec votre projet.",
       "libraryId": "Microsoft.AspNet.WebPages.Data",
       "targetGraphs": [
         "net5.0"
@@ -6333,7 +6321,7 @@
       "code": "NU1701",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Package 'Microsoft.AspNet.WebPages.WebData 2.0.20710' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework 'net5.0'. This package may not be fully compatible with your project.",
+      "message": "Le package 'Microsoft.AspNet.WebPages.WebData 2.0.20710' a été restauré en utilisant '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' au lieu du framework cible du projet 'net5.0'. Ce package n'est peut-être pas totalement compatible avec votre projet.",
       "libraryId": "Microsoft.AspNet.WebPages.WebData",
       "targetGraphs": [
         "net5.0"

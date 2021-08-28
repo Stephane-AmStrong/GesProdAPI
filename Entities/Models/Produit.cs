@@ -25,10 +25,10 @@ namespace Entities.Models
         public string Photo { get; set; }
         public string TauxImposition { get; set; }
         public string LibelleTaxeSpecifique { get; set; }
-        public int? MntTaxeSpecifique { get; set; }
+        public int MntTaxeSpecifique { get; set; }
         public Guid CategoriesId { get; set; }
 
-        public virtual Category Categories { get; set; }
+        public virtual Category Category { get; set; }
         public virtual ICollection<ApproProduit> ApproProduits { get; set; }
         public virtual ICollection<AutreSortie> AutreSorties { get; set; }
         public virtual ICollection<Disponibilite> Disponibilites { get; set; }

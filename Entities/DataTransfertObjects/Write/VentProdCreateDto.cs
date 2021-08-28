@@ -12,9 +12,9 @@ namespace Entities.DataTransfertObjects
         public string Localisation { get; set; }
         public int QteVendu { get; set; }
         //public int? MntRemise { get; set; }
-        public Guid? VenteId { get; set; }
+        public Guid? VentesId { get; set; }
         [Required]
-        public Guid ServiceId { get; set; }
+        public Guid ServicesId { get; set; }
 
     }
 }

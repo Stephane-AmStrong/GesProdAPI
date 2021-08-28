@@ -14,7 +14,7 @@ namespace Entities.Models
         //public bool ValidYearRange => MaxYearOfBirth > MinYearOfBirth;
 
         [JsonIgnore]
-        public Guid? ClientId { get; set; }
+        public Guid? ClientsId { get; set; }
 
         public Guid? IdUserEnr { get; set; }
     }

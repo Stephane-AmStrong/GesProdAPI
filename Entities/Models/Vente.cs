@@ -43,7 +43,7 @@ namespace Entities.Models
         public bool Api { get; set; }
         public string LibRemise { get; set; }
 
-        public virtual Client Clients { get; set; }
+        public virtual Client Client { get; set; }
         public virtual NumeroCompte NumeroCompte { get; set; }
         public virtual ICollection<VentProd> VentProds { get; set; }
     }

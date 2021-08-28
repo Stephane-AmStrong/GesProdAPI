@@ -12,8 +12,8 @@ namespace Entities.DataTransfertObjects
         public int QteVendu { get; set; }
         public int? PrixVente { get; set; }
         public int? MntRemise { get; set; }
-        public Guid? VenteId { get; set; }
-        public Guid? ServiceId { get; set; }
+        public Guid? VentesId { get; set; }
+        public Guid? ServicesId { get; set; }
         public string TauxImposition { get; set; }
     }
 }

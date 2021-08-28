@@ -20,7 +20,7 @@ namespace Repository
         {
             var ventes = Enumerable.Empty<Vente>().AsQueryable();
 
-            if(venteParameters.IdUserEnr == null && venteParameters.ClientId == null)
+            if(venteParameters.IdUserEnr == null && venteParameters.ClientsId == null)
             {
                 ventes = await Task.Run(() => FindAll()
                     .Include(x => x.Client)
@@ -32,7 +32,7 @@ namespace Repository
                     .ThenInclude(x => x.Produit)
                     .OrderByDescending(x => x.DateVent));
             } 
-            else if (venteParameters.IdUserEnr != null && venteParameters.ClientId == null)
+            else if (venteParameters.IdUserEnr != null && venteParameters.ClientsId == null)
             {
                 ventes = await Task.Run(() => FindByCondition(x=> x.IdUserEnr == venteParameters.IdUserEnr)
                     .Include(x => x.Client)
@@ -44,9 +44,9 @@ namespace Repository
                     .ThenInclude(x => x.Produit)
                     .OrderByDescending(x => x.DateVent));
             }
-            else if (venteParameters.IdUserEnr == null && venteParameters.ClientId != null)
+            else if (venteParameters.IdUserEnr == null && venteParameters.ClientsId != null)
             {
-                ventes = await Task.Run(() => FindByCondition(x => x.ClientId == venteParameters.ClientId)
+                ventes = await Task.Run(() => FindByCondition(x => x.ClientsId == venteParameters.ClientsId)
                     .Include(x => x.Client)
                     .Include(x => x.VentProds)
                     .ThenInclude(x => x.Service)
@@ -56,9 +56,9 @@ namespace Repository
                     .ThenInclude(x => x.Produit)
                     .OrderByDescending(x => x.DateVent));
             }
-            else if (venteParameters.IdUserEnr != null && venteParameters.ClientId != null)
+            else if (venteParameters.IdUserEnr != null && venteParameters.ClientsId != null)
             {
-                ventes = await Task.Run(() => FindByCondition(x => x.IdUserEnr == venteParameters.IdUserEnr && x.ClientId == venteParameters.ClientId)
+                ventes = await Task.Run(() => FindByCondition(x => x.IdUserEnr == venteParameters.IdUserEnr && x.ClientsId == venteParameters.ClientsId)
                     .Include(x => x.Client)
                     .Include(x => x.VentProds)
                     .ThenInclude(x => x.Service)

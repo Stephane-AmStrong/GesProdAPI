@@ -19,12 +19,12 @@ namespace Entities.Models
         public string Description { get; set; }
         public string Photo { get; set; }
         public string TauxImposition { get; set; }
-        public int? MntTaxeSpecifique { get; set; }
+        public int MntTaxeSpecifique { get; set; }
         public string LibelleTaxeSpecifique { get; set; }
         public Guid? VentProdId { get; set; }
         public Guid CategoriesId { get; set; }
 
-        public virtual Category Categories { get; set; }
+        public virtual Category Category { get; set; }
         public virtual ICollection<VentProd> VentProds { get; set; }
     }
 }

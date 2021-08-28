@@ -16,7 +16,7 @@ namespace Entities.DataTransfertObjects
         public DateTime DateVent { get; set; }
         public string LibelleFacture { get; set; }
         public DateTime? DateEcheance { get; set; }
-        public Guid? ClientId { get; set; }
+        public Guid? ClientsId { get; set; }
 
         public virtual ICollection<VentProdCreateDto> VentProds { get; set; }
     }

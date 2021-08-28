@@ -17,7 +17,7 @@ namespace Entities.Models
         public Guid ProfilsId { get; set; }
         public Guid SitesId { get; set; }
 
-        public virtual Profil Profils { get; set; }
-        public virtual Site Sites { get; set; }
+        public virtual Profil Profil { get; set; }
+        public virtual Site Site { get; set; }
     }
 }
