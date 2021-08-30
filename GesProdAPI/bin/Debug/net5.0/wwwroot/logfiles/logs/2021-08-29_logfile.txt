@@ -54,3 +54,12 @@
 2021-08-29 00:16:17.1501 INFO Returned declared Turnover from 01/08/2021 00:00:00 to 29/08/2021 23:03:03 having categoryId equal to '77820cf9-8307-40d8-8402-1cfa567b249b'
 2021-08-29 00:18:04.3415 INFO Returning Category with id f971e03e-6da1-4c50-8667-e5c74cb1bfdc.
 2021-08-29 00:18:04.6505 INFO Returned declared Turnover from 01/08/2021 00:00:00 to 29/08/2021 23:03:03 having categoryId equal to 'f971e03e-6da1-4c50-8667-e5c74cb1bfdc'
+2021-08-29 20:37:33.7317 INFO Returned all ventesDisponible ventesDisponible from database.
+2021-08-29 22:16:29.7871 INFO Returned all ventesDisponible ventesDisponible from database.
+2021-08-29 22:33:53.2912 INFO Returned all ventesDisponible ventesDisponible from database.
+2021-08-29 23:06:37.9815 INFO Returned all categories categories from database.
+2021-08-29 23:07:27.7295 INFO Returned all ventesDisponible ventesDisponible from database.
+2021-08-29 23:15:59.9884 INFO Returned all ventesDisponible ventesDisponible from database.
+2021-08-29 23:24:29.8218 INFO Returned all ventesDisponible ventesDisponible from database.
+2021-08-29 23:26:51.5552 INFO Returned all ventesDisponible ventesDisponible from database.
+2021-08-29 23:27:27.5982 INFO Returned all ventesDisponible ventesDisponible from database.

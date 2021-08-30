@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static Contracts.IVentProdRepository;
+using static Entities.Models.VenteParameters;
 
 namespace Repository
 {

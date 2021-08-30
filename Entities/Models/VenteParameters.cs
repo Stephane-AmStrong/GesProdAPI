@@ -15,7 +15,11 @@ namespace Entities.Models
 
         [JsonIgnore]
         public Guid? ClientsId { get; set; }
-
         public Guid? IdUserEnr { get; set; }
+
+        public DateTime? debutPeriode { get; set; }
+        public DateTime? finPeriode { get; set; }
+
     }
+
 }

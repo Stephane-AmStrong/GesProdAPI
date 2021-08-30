@@ -14,8 +14,11 @@ namespace Entities.DataTransfertObjects
         public int? MntRemise { get; set; }
         public Guid VentesId { get; set; }
         public Guid? ServicesId { get; set; }
+        public Guid? DisponibilitesId { get; set; }
         public string TauxImposition { get; set; }
         public virtual ServiceReadDto Service { get; set; }
         public virtual VenteReadDto Vente { get; set; }
+        public virtual DisponibiliteReadDto Disponibilite { get; set; }
+
     }
 }

@@ -24,12 +24,12 @@ namespace Contracts
         Task UpdateVentProdAsync(VentProd ventProd);
         Task UpdateVentProdAsync(IEnumerable<VentProd> ventProds);
         Task DeleteVentProdAsync(VentProd ventProd);
+    }
 
-        public enum Target
-        {
-            Both,
-            TheDeclaredOnes,
-            TheNonDeclaredOnes
-        }
+    public enum Target
+    {
+        Both,
+        TheDeclaredOnes,
+        TheNonDeclaredOnes
     }
 }

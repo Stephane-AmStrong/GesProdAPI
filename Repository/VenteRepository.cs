@@ -18,15 +18,28 @@ namespace Repository
 
         public async Task<PagedList<Vente>> GetAllVentesAsync(VenteParameters venteParameters)
         {
-            var ventes = Enumerable.Empty<Vente>().AsQueryable();
+            //var ventes = Enumerable.Empty<Vente>().AsQueryable();
 
-            if(venteParameters.IdUserEnr == null && venteParameters.ClientsId == null)
+            var ventes = await Task.Run(() => FindAll()
+               .Include(x => x.Client)
+               .Include(x => x.VentProds)
+               .ThenInclude(x => x.Service)
+               //.ThenInclude(x => x.Category)
+               .Include(x => x.VentProds)
+               .ThenInclude(x => x.Disponibilite)
+               .ThenInclude(x => x.Produit)
+               .OrderByDescending(x => x.DateVent));
+
+            #region working test
+            /*
+             
+            if (venteParameters.IdUserEnr == null && venteParameters.ClientsId == null)
             {
                 ventes = await Task.Run(() => FindAll()
                     .Include(x => x.Client)
                     .Include(x => x.VentProds)
                     .ThenInclude(x => x.Service)
-                    .ThenInclude(x => x.Category)
+                    //.ThenInclude(x => x.Category)
                     .Include(x => x.VentProds)
                     .ThenInclude(x => x.Disponibilite)
                     .ThenInclude(x => x.Produit)
@@ -38,7 +51,7 @@ namespace Repository
                     .Include(x => x.Client)
                     .Include(x => x.VentProds)
                     .ThenInclude(x => x.Service)
-                    .ThenInclude(x => x.Category)
+                    //.ThenInclude(x => x.Category)
                     .Include(x => x.VentProds)
                     .ThenInclude(x => x.Disponibilite)
                     .ThenInclude(x => x.Produit)
@@ -50,7 +63,7 @@ namespace Repository
                     .Include(x => x.Client)
                     .Include(x => x.VentProds)
                     .ThenInclude(x => x.Service)
-                    .ThenInclude(x => x.Category)
+                    //.ThenInclude(x => x.Category)
                     .Include(x => x.VentProds)
                     .ThenInclude(x => x.Disponibilite)
                     .ThenInclude(x => x.Produit)
@@ -62,13 +75,44 @@ namespace Repository
                     .Include(x => x.Client)
                     .Include(x => x.VentProds)
                     .ThenInclude(x => x.Service)
-                    .ThenInclude(x => x.Category)
+                    //.ThenInclude(x => x.Category)
                     .Include(x => x.VentProds)
                     .ThenInclude(x => x.Disponibilite)
                     .ThenInclude(x => x.Produit)
                     .OrderByDescending(x => x.DateVent));
             }
 
+             */
+            #endregion
+
+
+            if (venteParameters.IdUserEnr != null)
+            {
+                ventes = ventes.Where(x => 
+                    x.IdUserEnr == venteParameters.IdUserEnr
+                ).OrderByDescending(x => x.DateVent);
+            }
+            
+            if (venteParameters.ClientsId != null)
+            {
+                ventes = ventes.Where(x =>
+                    x.ClientsId == venteParameters.ClientsId
+                ).OrderByDescending(x => x.DateVent);
+            }
+            
+            if (venteParameters.debutPeriode != null)
+            {
+                ventes = ventes.Where(x =>
+                    x.DateEcheance >= venteParameters.debutPeriode
+                ).OrderByDescending(x => x.DateVent);
+            }
+            
+            if (venteParameters.finPeriode != null)
+            {
+                ventes = ventes.Where(x =>
+                    x.DateEcheance < venteParameters.finPeriode
+                ).OrderByDescending(x => x.DateVent);
+            }
 
             return await Task.Run(() =>
                 PagedList<Vente>.ToPagedList(ventes,
@@ -83,7 +127,7 @@ namespace Repository
                 .Include(x => x.Client)
                 .Include(x => x.VentProds)
                 .ThenInclude(x => x.Service)
-                .ThenInclude(x => x.Category)
+                //.ThenInclude(x => x.Category)
                 .Include(x => x.VentProds)
                 .ThenInclude(x => x.Disponibilite)
                 .ThenInclude(x => x.Produit)

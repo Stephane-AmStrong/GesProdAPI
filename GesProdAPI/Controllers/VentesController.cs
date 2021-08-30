@@ -14,6 +14,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using static Contracts.IVentProdRepository;
+using static Entities.Models.VenteParameters;
 
 namespace GesProdAPI.Controllers
 {

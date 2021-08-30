@@ -20,7 +20,7 @@ namespace Repository
         {
             return await Task.Run(() =>
                 PagedList<Service>.ToPagedList(FindAll()
-                .Include(x => x.Category)
+                //.Include(x => x.Category)
                 .OrderBy(x => x.Libelle),
                     paginationParameters.PageNumber,
                     paginationParameters.PageSize)
@@ -35,7 +35,7 @@ namespace Repository
         public async Task<Service> GetServiceByIdAsync(Guid id)
         {
             return await FindByCondition(service => service.Id.Equals(id))
-                .Include(x => x.Category)
+                //.Include(x => x.Category)
                 .OrderBy(x => x.Libelle)
                 .FirstOrDefaultAsync();
         }
@@ -68,7 +68,7 @@ namespace Repository
             - une chambre est disponible pour période si sa date de début souhaité
              */
             var availableServices = await FindAll()
-                .Include(x => x.Category)
+                //.Include(x => x.Category)
                 .OrderBy(x => x.Libelle).ToListAsync();
 
             var unAvailableServices = await FindByCondition(service => service.VentProds.Where(vp => ((vp.Vente.DateVent <= startingAt && vp.Vente.DateEcheance > startingAt) || (vp.Vente.DateVent <= endingAt && vp.Vente.DateEcheance > endingAt))).Any()).ToListAsync();

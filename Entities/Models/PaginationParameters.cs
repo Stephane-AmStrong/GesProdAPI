@@ -8,9 +8,11 @@ namespace Entities.Models
 {
     public class PaginationParameters
     {
-        const int maxPageSize = 250;
+        //const int maxPageSize = 250;
+        const int maxPageSize = 2500;
         public int PageNumber { get; set; } = 1;
-        private int _pageSize = 10;
+        //private int _pageSize = 10;
+        private int _pageSize = 1000;
         public int PageSize
         {
             get

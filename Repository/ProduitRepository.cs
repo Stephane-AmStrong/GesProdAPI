@@ -20,7 +20,7 @@ namespace Repository
         {
             return await Task.Run(() =>
                 PagedList<Produit>.ToPagedList(FindAll()
-                .Include(x => x.Category)
+                //.Include(x => x.Category)
                 .OrderBy(x => x.Libelle),
                     paginationParameters.PageNumber,
                     paginationParameters.PageSize)
@@ -30,7 +30,7 @@ namespace Repository
         public async Task<Produit> GetProduitByIdAsync(Guid id)
         {
             return await FindByCondition(produit => produit.Id.Equals(id))
-                .Include(x => x.Category)
+                //.Include(x => x.Category)
                 .OrderBy(x => x.Libelle)
                 .FirstOrDefaultAsync();
         }

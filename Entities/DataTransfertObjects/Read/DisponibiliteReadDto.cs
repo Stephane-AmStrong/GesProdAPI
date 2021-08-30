@@ -7,11 +7,11 @@ namespace Entities.DataTransfertObjects
 {
     public partial class DisponibiliteReadDto
     {
-        public DisponibiliteReadDto()
-        {
-            ApproSites = new HashSet<ApproSiteReadDto>();
-            VentProds = new HashSet<VentProdReadDto>();
-        }
+        //public DisponibiliteReadDto()
+        //{
+        //    ApproSites = new HashSet<ApproSiteReadDto>();
+        //    VentProds = new HashSet<VentProdReadDto>();
+        //}
 
         public Guid Id { get; set; }
         public string Disponible { get; set; }
@@ -24,7 +24,7 @@ namespace Entities.DataTransfertObjects
 
         public virtual ProduitReadDto Produit { get; set; }
         public virtual SiteReadDto Site { get; set; }
-        public virtual ICollection<ApproSiteReadDto> ApproSites { get; set; }
-        public virtual ICollection<VentProdReadDto> VentProds { get; set; }
+        //public virtual ICollection<ApproSiteReadDto> ApproSites { get; set; }
+        //public virtual ICollection<VentProdReadDto> VentProds { get; set; }
     }
 }
