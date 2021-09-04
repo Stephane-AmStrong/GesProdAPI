@@ -63,6 +63,10 @@ namespace Repository
             await DeleteAsync(ventProd);
         }
 
+        /*
+         
+         */
+
         public async Task<long> GetTurnoverAsync(DateTime startingAt, DateTime endingAt, Target target)
         {
             if (target == Target.TheDeclaredOnes)

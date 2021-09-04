@@ -72,7 +72,7 @@ namespace GesProdAPI.Controllers
         
 
 
-        [HttpGet("clients")]
+        [HttpGet("current-client")]
         public async Task<IActionResult> GetLoggIngCustomerVentes([FromQuery] PaginationParameters paginationParameters)
         {
             var venteParameters = new VenteParameters

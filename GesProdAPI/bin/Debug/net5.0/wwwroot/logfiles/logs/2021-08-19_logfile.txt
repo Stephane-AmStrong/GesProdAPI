@@ -1,6 +1,0 @@
-2021-08-19 22:39:42.7753 INFO Returning Category with id eb1693fc-c5ae-4cfb-92d6-0af8624d7d78.
-2021-08-19 22:39:54.7282 INFO Returned Turnover from 16/08/2021 00:00:00 to 19/08/2021 00:00:00 having categoryId equal to 'eb1693fc-c5ae-4cfb-92d6-0af8624d7d78'
-2021-08-19 22:43:16.6070 INFO Returning Category with id eb1693fc-c5ae-4cfb-92d6-0af8624d7d78.
-2021-08-19 22:43:26.6513 INFO Returned Turnover from 16/08/2021 00:00:00 to 19/08/2021 00:00:00 having categoryId equal to 'eb1693fc-c5ae-4cfb-92d6-0af8624d7d78'
-2021-08-19 22:47:48.1946 INFO Returning Category with id eb1693fc-c5ae-4cfb-92d6-0af8624d7d78.
-2021-08-19 22:47:54.3192 INFO Returned Turnover from 16/08/2021 00:00:00 to 19/08/2021 00:00:00 having categoryId equal to 'eb1693fc-c5ae-4cfb-92d6-0af8624d7d78'
